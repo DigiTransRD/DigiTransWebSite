@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "首頁",
+    "whitepaper": "技術白皮書",
+    "techArticles": "商用系統技術文章",
+    "retailTrends": "零售流通趨勢",
+    "contact": "系統整合業務聯繫",
+    "cms": "CMS 後台"
+  },
+  "hero": {
+    "title": "ABI Assistant 商用人工智慧助理",
+    "subtitle": "專為零售、流通、餐飲、旅宿等中小店家打造的雲地混合 AI 系統",
+    "ctaWhitepaper": "下載技術白皮書",
+    "ctaContact": "聯繫業務評估"
+  },
+  "contact": {
+    "title": "系統整合業務聯繫",
+    "desc": "本產品為半客製化系統整合服務，需由業務評估後報價。",
+    "name": "姓名",
+    "company": "公司",
+    "email": "Email",
+    "phone": "電話",
+    "message": "需求描述",
+    "submit": "送出需求",
+    "success": "已收到需求，將由業務聯繫。"
+  },
+  "cms": {
+    "title": "CMS 文章管理",
+    "login": "請輸入 CMS 帳號密碼 (僅限 digitrans.ai@gmail.com)",
+    "create": "建立 / 更新文章",
+    "slug": "Slug",
+    "titleField": "標題",
+    "excerpt": "摘要",
+    "body": "內文",
+    "locale": "語系",
+    "category": "分類",
+    "tags": "標籤 (以逗號分隔)",
+    "status": "狀態",
+    "publishedAt": "發佈時間 (選填)",
+    "save": "儲存文章"
+  },
+  "articles": {
+    "empty": "尚無文章",
+    "readMore": "閱讀"
+  },
+  "footer": {
+    "company": "資傳數位有限公司",
+    "address": "台北市 100007 中正區 館前路2號12樓",
+    "email": "digitrans.tw@gmail.com",
+    "phone": "02-6605-8186"
+  }
+}

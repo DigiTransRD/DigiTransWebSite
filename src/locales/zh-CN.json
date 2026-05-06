@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "首页",
+    "whitepaper": "技术白皮书",
+    "techArticles": "商用系统技术文章",
+    "retailTrends": "零售流通趋势",
+    "contact": "系统整合业务联系",
+    "cms": "CMS 后台"
+  },
+  "hero": {
+    "title": "ABI Assistant 商用人工智慧助理",
+    "subtitle": "为零售、流通、餐饮、旅宿等中小店家打造的云地混合 AI 系统",
+    "ctaWhitepaper": "下载技术白皮书",
+    "ctaContact": "联系业务评估"
+  },
+  "contact": {
+    "title": "系统整合业务联系",
+    "desc": "本产品为半客制化系统整合服务，需由业务评估后报价。",
+    "name": "姓名",
+    "company": "公司",
+    "email": "Email",
+    "phone": "电话",
+    "message": "需求描述",
+    "submit": "送出需求",
+    "success": "已收到需求，将由业务联系。"
+  },
+  "cms": {
+    "title": "CMS 文章管理",
+    "login": "请输入 CMS 帐号密码（仅限 digitrans.ai@gmail.com）",
+    "create": "建立 / 更新文章",
+    "slug": "Slug",
+    "titleField": "标题",
+    "excerpt": "摘要",
+    "body": "内文",
+    "locale": "语系",
+    "category": "分类",
+    "tags": "标签 (以逗号分隔)",
+    "status": "状态",
+    "publishedAt": "发布时间 (选填)",
+    "save": "储存文章"
+  },
+  "articles": {
+    "empty": "尚无文章",
+    "readMore": "阅读"
+  },
+  "footer": {
+    "company": "资传数位有限公司",
+    "address": "台北市 100007 中正区 馆前路2号12楼",
+    "email": "digitrans.tw@gmail.com",
+    "phone": "02-6605-8186"
+  }
+}

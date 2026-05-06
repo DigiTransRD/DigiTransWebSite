@@ -1,0 +1,52 @@
+{
+  "nav": {
+    "home": "Home",
+    "whitepaper": "Whitepaper",
+    "techArticles": "Tech Articles",
+    "retailTrends": "Retail Trends",
+    "contact": "Integration Contact",
+    "cms": "CMS"
+  },
+  "hero": {
+    "title": "ABI Assistant - AI for Business",
+    "subtitle": "Hybrid cloud + edge AI for retail, F&B, hospitality SMEs",
+    "ctaWhitepaper": "Download Whitepaper",
+    "ctaContact": "Talk to Sales"
+  },
+  "contact": {
+    "title": "Integration Contact",
+    "desc": "Half-custom integrations; pricing after sales assessment.",
+    "name": "Name",
+    "company": "Company",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Describe your needs",
+    "submit": "Submit",
+    "success": "Request received. Sales will contact you."
+  },
+  "cms": {
+    "title": "CMS Article Management",
+    "login": "Enter CMS credentials (digitrans.ai@gmail.com only)",
+    "create": "Create / Update Article",
+    "slug": "Slug",
+    "titleField": "Title",
+    "excerpt": "Excerpt",
+    "body": "Body",
+    "locale": "Locale",
+    "category": "Category",
+    "tags": "Tags (comma separated)",
+    "status": "Status",
+    "publishedAt": "Published At (optional)",
+    "save": "Save Article"
+  },
+  "articles": {
+    "empty": "No articles yet",
+    "readMore": "Read"
+  },
+  "footer": {
+    "company": "Digitrans Digital Co., Ltd.",
+    "address": "12F., No.2, Guanqian Rd., Zhongzheng Dist., Taipei 100007",
+    "email": "digitrans.tw@gmail.com",
+    "phone": "02-6605-8186"
+  }
+}
