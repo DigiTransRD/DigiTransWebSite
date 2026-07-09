@@ -1,9 +1,11 @@
 <!-- 英雄頁副標題 -->
-subtitle:**Artificial Business Intelligence Assistant**
-**零售、餐飲店家 營運管理專用 輕量級AI**
+subtitle:**ABI (Artificial Business Intelligence) Assistant 商用人工智慧助理**
+資料留在店內、操作就在 LINE。報表用問的、表單用說的、管理系統用生成的——
+專為零售、流通、餐飲、旅宿中小店家打造的輕量級 AI 系統，不必養 IT 團隊，也能完成 AI 轉型。
 
 <!-- Chips 標籤列表，每行一個 -->
-專為商用系統整合設計
-多門市雲地混合架構
-模組化工具箱
+雲地混合架構
+LINE 官方帳號整合
 業態訂製技能包
+免昂貴預訓練
+多門市多機台

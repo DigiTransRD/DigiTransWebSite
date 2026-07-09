@@ -9,6 +9,24 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --header-height: 72px;
+
+  /* 品牌配色：主體藍色識別、CTA 與強調元素綠色（藍綠混搭） */
+  --color-primary: #1d4ed8;
+  --color-primary-strong: #1e40af;
+  --color-primary-soft: #eff6ff;
+  --color-accent: #059669;
+  --color-accent-strong: #047857;
+  --color-accent-soft: #ecfdf5;
+  --color-ink: #0f172a;
+  --color-muted: #475569;
+  --color-faint: #64748b;
+  --color-border: #e2e8f0;
+  --color-surface: #ffffff;
+  --color-bg: #f8fafc;
+
+  --radius-card: 16px;
+  --shadow-card: 0 10px 26px rgba(15, 23, 42, 0.07);
+  --shadow-card-hover: 0 16px 34px rgba(15, 23, 42, 0.12);
 }
 
 html {
@@ -18,7 +36,7 @@ html {
 
 body {
   margin: 0;
-  background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 40%, #f8fafc 100%);
+  background: linear-gradient(180deg, #f8fafc 0%, #eef6f3 40%, #f8fafc 100%);
   overflow-x: hidden;
 }
 
@@ -39,4 +57,53 @@ a {
 .content {
   flex: 1;
   padding-top: var(--header-height, 72px);
+}
+
+/* 共用按鈕：綠色實心為主要 CTA，白底描邊為次要 CTA */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, var(--color-accent), #10b981);
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background: linear-gradient(135deg, var(--color-accent-strong), var(--color-accent));
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(5, 150, 105, 0.28);
+}
+
+.btn.ghost {
+  border: 1px solid var(--color-border);
+  color: var(--color-primary-strong);
+  background: var(--color-surface);
+}
+
+.btn.ghost:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  transform: translateY(-1px);
+}
+
+.btn.full {
+  width: 100%;
+  text-align: center;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

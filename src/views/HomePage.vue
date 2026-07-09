@@ -7,6 +7,16 @@ import archCore from '@/assets/images/9b07d26265a59631f51c3046a3cb1e76.jpg'
 import archIntegrate from '@/assets/images/2aa64f6930a2007656859e990e8ac073.jpg'
 import heroImage from '@/assets/images/ABIAssistant-2.png'
 
+import {
+  valuePillars,
+  compareRows,
+  featureCards,
+  genAppSteps,
+  genAppCapabilities,
+  genAppSecurityNote,
+  faqItems
+} from '@/content/homeContent'
+
 type Card = {
   id: string
   title: string
@@ -164,20 +174,20 @@ const parseHeroTags = (mdContent: string): { subtitle: string; chips: string[] }
     subtitle: '',
     chips: [] as string[]
   }
-  
+
   if (!mdContent) return result
-  
+
   // 移除 HTML 註解
   const cleanContent = mdContent.replace(/<!--[\s\S]*?-->/g, '').trim()
-  
+
   const lines = cleanContent.split('\n')
   let subtitleLines: string[] = []
   let inSubtitleSection = false
   let subtitleStarted = false
-  
+
   for (let i = 0; i < lines.length; i++) {
     const trimmed = (lines[i] ?? '').trim()
-    
+
     // 空行：如果已經開始 subtitle，則結束 subtitle 區塊
     if (!trimmed) {
       if (subtitleStarted) {
@@ -186,7 +196,7 @@ const parseHeroTags = (mdContent: string): { subtitle: string; chips: string[] }
       }
       continue
     }
-    
+
     // 檢查是否是 subtitle 行
     if (trimmed.startsWith('subtitle:')) {
       subtitleStarted = true
@@ -198,25 +208,25 @@ const parseHeroTags = (mdContent: string): { subtitle: string; chips: string[] }
       }
       continue
     }
-    
+
     // 如果在 subtitle 區塊中，繼續收集 subtitle 內容
     if (inSubtitleSection && subtitleStarted) {
       subtitleLines.push(trimmed)
       continue
     }
-    
+
     // 剩下的都是 chips（過濾標題）
     if (!trimmed.startsWith('#')) {
       result.chips.push(trimmed)
     }
   }
-  
+
   // 組合 subtitle 內容（支援換行）
   // 將換行轉換為 HTML <br> 標籤，marked 會保留 HTML 標籤
   if (subtitleLines.length > 0) {
     result.subtitle = subtitleLines.map(line => line.trim()).join('<br>')
   }
-  
+
   return result
 }
 
@@ -235,31 +245,32 @@ const skillCards = ref<Card[]>([])
 const architectureOverviewContent = ref<string>('')
 const architectureConsultingContent = ref<string>('')
 
-const architecturePanels = computed(() => [
-  { type: 'image', title: '產品架構圖', image: archCoreUrl.value },
+// 架構區：圖與說明成對呈現（產品架構、系統整合）
+const architecturePairs = computed(() => [
   {
-    type: 'markdown',
-    title: '架構說明文字',
+    title: '產品架構',
+    image: archCoreUrl.value,
     content: architectureOverviewContent.value
   },
-  { type: 'image', title: '系統整合架構圖', image: archIntegrateUrl.value },
   {
-    type: 'markdown',
-    title: '系統整合說明文字',
+    title: '系統整合',
+    image: archIntegrateUrl.value,
     content: architectureConsultingContent.value
   }
 ])
 
-// 解析 solutions.md 檔案內容
+type SolutionPlan = { name: string; tagline: string; features: string[] }
+
+// 解析 solutions.md 檔案內容（含 columns、方案 tagline 與 features）
 const parseSolutionsMd = (mdContent: string) => {
-  const result: { columns: number; plans: Array<{ name: string; features: string[] }> } = {
+  const result: { columns: number; plans: SolutionPlan[] } = {
     columns: 3,
     plans: []
   }
-  
+
   // 移除 HTML 註解
   let cleanContent = mdContent.replace(/<!--[\s\S]*?-->/g, '').trim()
-  
+
   // 解析 columns 配置（更健壯的匹配方式）
   const lines = cleanContent.split('\n')
   for (const line of lines) {
@@ -279,24 +290,25 @@ const parseSolutionsMd = (mdContent: string) => {
       break
     }
   }
-  
+
   const sections = cleanContent.split(/^##\s+/m).filter(section => {
     const trimmed = section.trim()
     return trimmed && !trimmed.startsWith('<!--') && !trimmed.startsWith('columns:')
   })
-  
+
   for (const section of sections) {
     const lines = section.split('\n').map(line => line.trim())
     const name = lines[0]
-    
+
     if (!name || name.startsWith('columns:')) continue
-    
+
+    let tagline = ''
     const features: string[] = []
     let inFeatures = false
-    
+
     for (let i = 1; i < lines.length; i++) {
       const line = lines[i]
-      
+
       if (!line) {
         if (inFeatures) {
           // 空行結束 features 區塊
@@ -304,8 +316,10 @@ const parseSolutionsMd = (mdContent: string) => {
         }
         continue
       }
-      
-      if (line === 'features:') {
+
+      if (line.startsWith('tagline:')) {
+        tagline = line.replace(/^tagline:\s*/, '').trim()
+      } else if (line === 'features:') {
         inFeatures = true
       } else if (inFeatures && line.startsWith('-')) {
         features.push(line.replace(/^-\s+/, '').trim())
@@ -314,16 +328,16 @@ const parseSolutionsMd = (mdContent: string) => {
         break
       }
     }
-    
+
     if (name && features.length > 0) {
-      result.plans.push({ name, features })
+      result.plans.push({ name, tagline, features })
     }
   }
-  
+
   return result
 }
 
-const solutionPlans = ref<Array<{ name: string; features: string[] }>>([])
+const solutionPlans = ref<SolutionPlan[]>([])
 const solutionColumns = ref<number>(3)
 
 // 從 md 檔案讀取關於資傳內容
@@ -441,6 +455,19 @@ const closeArticle = () => {
   activeArticle.value = null
 }
 
+// CTA 捲動：扣除固定 header 高度，避免標題被遮住
+const scrollToSection = (id: string) => {
+  const target = document.getElementById(id)
+  if (!target) return
+  const headerHeight =
+    Number.parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue('--header-height'),
+      10
+    ) || 72
+  const top = target.getBoundingClientRect().top + window.scrollY - headerHeight
+  window.scrollTo({ top, behavior: 'smooth' })
+}
+
 const contactForm = reactive({
   company: '',
   name: '',
@@ -498,109 +525,221 @@ const submitContactForm = async () => {
 <template>
   <div class="home">
     <p v-if="contentLoadError" class="muted">{{ contentLoadError }}</p>
-    <section class="hero">
-      <div class="hero__visual">
-        <div class="hero__image" :style="`background-image: url(${heroImageUrl})`">
-          <div class="hero__overlay">
-            <p class="eyebrow">雲地混合架構．輕量級AI</p>
-            <h1 class="hero-title">
-              <span class="title-main gradient-text">ABI Assistant</span>
-              <span class="title-sub">商用人工智慧助理</span>
-            </h1>
-          </div>
-        </div>
-        <div class="hero__body">
-          <div class="subtitle" v-html="renderMarkdown(heroSubtitle)"></div>
-          <div class="chips">
-            <span v-for="chip in heroChips" :key="chip">{{ chip }}</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <section id="trends" class="section">
-      <div class="section__header">
-        <p class="eyebrow">趨勢應用</p>
-        <h2>2026 是領域應用型AI大爆發的年代，也是您事業跨越『AI轉型』門檻的關鍵期</h2>
-      </div>
-      <div class="card-grid card-grid--two">
-        <article
-          v-for="card in trendGrid"
-          :key="card.id"
-          class="panel-card overlay-title"
-          @click="openArticle(card.title, card.content)"
-        >
-          <div class="panel-card__image" :style="card.image ? `background-image: url(${card.image})` : ''"></div>
-          <div class="panel-card__body">
-            <h3>{{ card.title }}</h3>
-            <p>{{ card.subtitle }}</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="architecture" class="section muted">
-      <div class="section__header">
-        <p class="eyebrow">產品架構</p>
-        <h2>雲地混合架構、企業級 MCP 工具箱、業態訂製技能包</h2>
-      </div>
-      <div class="architecture-list">
-        <div
-          v-for="(panel, index) in architecturePanels"
-          :key="`${panel.title}-${index}`"
-          class="arch-panel"
-        >
-          <img
-            v-if="panel.type === 'image'"
-            class="arch-image"
-            :src="panel.image"
-            :alt="panel.title"
-            loading="lazy"
-          />
-          <div v-else class="arch-text" v-html="renderMarkdown(panel.content)" />
+    <!-- Hero：文字為主的大標語＋雙 CTA -->
+    <section id="hero" class="hero">
+      <div class="hero__text">
+        <p class="hero__eyebrow">零售．流通．餐飲．旅宿　中小店家專用</p>
+        <h1 class="hero__title">
+          打造你的<span class="hero__highlight">雲地混合</span><br />
+          商用 AI 助理
+        </h1>
+        <div class="hero__subtitle" v-html="renderMarkdown(heroSubtitle)"></div>
+        <div class="hero__ctas">
+          <button class="btn primary" type="button" @click="scrollToSection('contact')">
+            💬 免費諮詢導入
+          </button>
+          <button class="btn ghost" type="button" @click="scrollToSection('solutions')">
+            看導入方案
+          </button>
+        </div>
+        <div class="chips">
+          <span v-for="chip in heroChips" :key="chip">{{ chip }}</span>
         </div>
       </div>
-    </section>
-
-    <section id="skills" class="section">
-      <div class="section__header">
-        <p class="eyebrow">業態技能</p>
-        <h2>量身訂製的AI技能包，毋須昂貴的預訓練，輕鬆賦予營運流程所需的專屬技能</h2>
-      </div>
-      <div class="card-grid card-grid--two">
-        <article
-          v-for="card in skillGrid"
-          :key="card.id"
-          class="panel-card overlay-title"
-          @click="openArticle(card.title, card.content)"
-        >
-          <div class="panel-card__image" :style="card.image ? `background-image: url(${card.image})` : ''"></div>
-          <div class="panel-card__body">
-            <h3>{{ card.title }}</h3>
-          </div>
-        </article>
+      <div class="hero__media">
+        <img :src="heroImageUrl" alt="ABI Assistant 商用人工智慧助理" loading="eager" />
       </div>
     </section>
 
-    <section id="solutions" class="section muted">
+    <!-- 三大價值支柱 -->
+    <section id="value" class="section">
       <div class="section__header">
-        <p class="eyebrow">導入方案</p>
-        <h2>提供多種彈性選擇，可依照IT能力成熟度選擇適合的AI落地方案</h2>
+        <p class="eyebrow">為什麼選擇 ABI Assistant</p>
+        <h2>AI 轉型的三道門檻：資料安全、學習成本、開發費用，一次解決</h2>
       </div>
-      <div class="card-grid" :class="`card-grid--${solutionColumns}`">
-        <article v-for="plan in solutionPlans" :key="plan.name" class="plan">
-          <h3>{{ plan.name }}</h3>
+      <div class="pillar-grid">
+        <article v-for="pillar in valuePillars" :key="pillar.title" class="pillar">
+          <div class="pillar__icon">{{ pillar.icon }}</div>
+          <h3>{{ pillar.title }}</h3>
+          <p>{{ pillar.description }}</p>
           <ul>
-            <li v-for="item in plan.features" :key="item">{{ item }}</li>
+            <li v-for="point in pillar.points" :key="point">{{ point }}</li>
           </ul>
         </article>
       </div>
     </section>
 
+    <!-- 對比區：一般雲端 AI 工具 vs ABI Assistant -->
+    <section id="compare" class="section muted">
+      <div class="section__header">
+        <p class="eyebrow">差異比較</p>
+        <h2>一般雲端 AI 工具 vs ABI Assistant</h2>
+      </div>
+      <div class="compare">
+        <div class="compare__head">
+          <div class="compare__aspect"></div>
+          <div class="compare__col-title generic">一般雲端 AI 工具</div>
+          <div class="compare__col-title abi">ABI Assistant</div>
+        </div>
+        <div v-for="row in compareRows" :key="row.aspect" class="compare__row">
+          <div class="compare__aspect">{{ row.aspect }}</div>
+          <div class="compare__cell generic"><span class="mark">✕</span>{{ row.generic }}</div>
+          <div class="compare__cell abi"><span class="mark">✓</span>{{ row.abi }}</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 六大功能 -->
+    <section id="features" class="section">
+      <div class="section__header">
+        <p class="eyebrow">產品功能</p>
+        <h2>一套系統，把店務交辦給 AI</h2>
+      </div>
+      <div class="feature-grid">
+        <article v-for="feature in featureCards" :key="feature.title" class="feature">
+          <div class="feature__icon">{{ feature.icon }}</div>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.tagline }}</p>
+          <ul>
+            <li v-for="point in feature.points" :key="point">{{ point }}</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 生成式 APP 專區 -->
+    <section id="genapp" class="section genapp">
+      <div class="section__header">
+        <p class="eyebrow light">生成式 APP</p>
+        <h2>不寫程式，三步驟長出你的管理系統</h2>
+        <p class="section__lead">
+          既有系統缺一塊管理功能？從資料庫結構出發，與 AI 對話定案後自動生成管理後台，部署成員工直接登入使用的獨立網站。
+        </p>
+      </div>
+      <div class="genapp-steps">
+        <article v-for="step in genAppSteps" :key="step.step" class="genapp-step">
+          <div class="genapp-step__no">{{ step.step }}</div>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.description }}</p>
+        </article>
+      </div>
+      <div class="genapp-extra">
+        <div class="genapp-capabilities">
+          <h3>生成的管理系統做得到</h3>
+          <ul>
+            <li v-for="capability in genAppCapabilities" :key="capability">{{ capability }}</li>
+          </ul>
+        </div>
+        <div class="genapp-security">
+          <h3>🛡️ 安全邊界</h3>
+          <p>{{ genAppSecurityNote }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 架構與整合 -->
+    <section id="architecture" class="section muted">
+      <div class="section__header">
+        <p class="eyebrow">架構與整合</p>
+        <h2>雲地混合架構，接得上你既有的系統</h2>
+      </div>
+      <div class="architecture-grid">
+        <div v-for="pair in architecturePairs" :key="pair.title" class="arch-panel">
+          <img class="arch-image" :src="pair.image" :alt="pair.title" loading="lazy" />
+          <div class="arch-text" v-html="renderMarkdown(pair.content)" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 業態技能 -->
+    <section id="skills" class="section">
+      <div class="section__header">
+        <p class="eyebrow">業態技能</p>
+        <h2>量身訂製的 AI 技能包，講你的營運語言</h2>
+        <p class="section__lead">
+          毋須昂貴的模型預訓練，以技能包直接賦予 AI 你所屬業態的營運知識與工作方法。點擊卡片看各業態範例。
+        </p>
+      </div>
+      <div class="card-grid card-grid--two">
+        <article
+          v-for="card in skillGrid"
+          :key="card.id"
+          class="panel-card"
+          @click="openArticle(card.title, card.content)"
+        >
+          <div class="panel-card__image" :style="card.image ? `background-image: url(${card.image})` : ''"></div>
+          <div class="panel-card__body">
+            <h3>{{ card.title }}</h3>
+            <p v-if="card.subtitle">{{ card.subtitle }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 導入方案 -->
+    <section id="solutions" class="section muted">
+      <div class="section__header">
+        <p class="eyebrow">導入方案</p>
+        <h2>依你的 IT 成熟度，選擇合適的落地方式</h2>
+      </div>
+      <div class="card-grid" :class="`card-grid--${solutionColumns}`">
+        <article v-for="plan in solutionPlans" :key="plan.name" class="plan">
+          <h3>{{ plan.name }}</h3>
+          <p v-if="plan.tagline" class="plan__tagline">{{ plan.tagline }}</p>
+          <ul>
+            <li v-for="item in plan.features" :key="item">{{ item }}</li>
+          </ul>
+        </article>
+      </div>
+      <div class="section__cta">
+        <button class="btn primary" type="button" @click="scrollToSection('contact')">
+          💬 和我們聊聊哪種方案適合你
+        </button>
+      </div>
+    </section>
+
+    <!-- 市場趨勢 -->
+    <section id="trends" class="section">
+      <div class="section__header">
+        <p class="eyebrow">市場趨勢</p>
+        <h2>2026 是領域應用型 AI 大爆發的一年，也是跨越「AI 轉型」門檻的關鍵期</h2>
+      </div>
+      <div class="card-grid card-grid--two">
+        <article
+          v-for="card in trendGrid"
+          :key="card.id"
+          class="panel-card"
+          @click="openArticle(card.title, card.content)"
+        >
+          <div class="panel-card__image" :style="card.image ? `background-image: url(${card.image})` : ''"></div>
+          <div class="panel-card__body">
+            <h3>{{ card.title }}</h3>
+            <p v-if="card.subtitle">{{ card.subtitle }}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 常見問題 -->
+    <section id="faq" class="section muted">
+      <div class="section__header">
+        <p class="eyebrow">常見問題</p>
+        <h2>導入前，老闆們最常問的幾件事</h2>
+      </div>
+      <div class="faq-list">
+        <details v-for="item in faqItems" :key="item.question" class="faq-item">
+          <summary>{{ item.question }}</summary>
+          <p>{{ item.answer }}</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- 業務聯繫 -->
     <section id="contact" class="section">
       <div class="section__header">
         <p class="eyebrow">業務聯繫</p>
-        <h2>需要諮詢或合作？</h2>
+        <h2>免費諮詢：讓我們了解你的店，給你可落地的建議</h2>
       </div>
       <div class="contact-panel">
         <form class="contact-form" @submit.prevent="submitContactForm">
@@ -627,7 +766,7 @@ const submitContactForm = async () => {
             </label>
             <label>
               <span>洽詢內容 <span class="required">*</span></span>
-              <textarea v-model="contactForm.message" rows="4" placeholder="洽詢內容" required></textarea>
+              <textarea v-model="contactForm.message" rows="4" placeholder="想解決的問題、門市數量、使用中的系統…" required></textarea>
             </label>
           </div>
           <button type="submit" class="btn primary full" :disabled="submitting">
@@ -639,6 +778,7 @@ const submitContactForm = async () => {
       </div>
     </section>
 
+    <!-- 關於資傳 -->
     <section id="about" class="section muted">
       <div class="section__header">
         <p class="eyebrow">關於資傳</p>
@@ -662,73 +802,68 @@ const submitContactForm = async () => {
   display: flex;
   flex-direction: column;
   gap: 72px;
-  padding: 32px 20px 64px;
+  padding: 40px 20px 64px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
 }
 
+/* ---------- Hero ---------- */
 .hero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: 32px;
+  padding: 24px 0 8px;
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  border: 1px solid #a7f3d0;
+  color: var(--color-accent-strong);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+}
+
+.hero__title {
+  margin: 0 0 16px;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.22;
+  color: var(--color-ink);
+  letter-spacing: 0.01em;
+}
+
+.hero__highlight {
+  color: var(--color-primary);
+}
+
+.hero__subtitle {
+  color: var(--color-muted);
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+
+.hero__ctas {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
 }
 
-.hero__content h1 {
-  font-size: 40px;
-  margin: 10px 0;
-  color: #0f172a;
-  line-height: 1.2;
-}
-
-.gradient-text {
-  color: #e0f2ff;
-  text-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-.subtitle {
-  color: #1f2937;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.eyebrow {
-  color: #2563eb;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  font-size: 18px;
-}
-
-.btn {
-  padding: 12px 16px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 700;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-  cursor: pointer;
-}
-
-.btn.primary {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
-  color: #fff;
-}
-
-.btn.ghost {
-  border: 1px solid #e2e8f0;
-  color: #0f172a;
-  background: #fff;
-}
-
-.btn.full {
+.hero__media img {
+  display: block;
   width: 100%;
-  text-align: center;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+  height: auto;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 18px 36px rgba(29, 78, 216, 0.12);
 }
 
 .chips {
@@ -738,122 +873,429 @@ const submitContactForm = async () => {
 }
 
 .chips span {
-  padding: 5.5px 10px;
-  background: #eef2ff;
-  border: 1px solid #cbd5e1;
-  border-radius: 10px;
-  color: #0f172a;
+  padding: 6px 12px;
+  background: var(--color-primary-soft);
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  color: var(--color-primary-strong);
+  font-size: 14px;
+  font-weight: 600;
 }
 
-.hero__visual {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-self: stretch;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 18px 36px rgba(37, 99, 235, 0.12);
-  border: 1px solid #e2e8f0;
-}
-
-.hero__image {
-  position: relative;
-  height: 420px;
-  background-size: cover;
-  background-position: center;
-}
-
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 24px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.48) 0%, rgba(0, 0, 0, 0.25) 100%);
-}
-
-.hero__overlay h1 {
-  margin: -8px 0 0;
-  color: #f8fafc;
-  text-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-}
-
-.hero__overlay .eyebrow {
-  color: #bfdbfe;
-  /* 自適應字級，避免手機上換行 */
-  font-size: clamp(12px, 3.6vw, 22px);
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.hero-title {
-  display: grid;
-  gap: 6px;
-}
-
-.title-main {
-  display: inline-block;
-  /* 自適應字級，避免手機上換行 */
-  font-size: clamp(26px, 8.8vw, 46px);
-  line-height: 1.15;
-  white-space: nowrap;
-}
-
-.title-sub {
-  display: inline-block;
-  /* 桌機保留視覺縮排；手機移除以避免換行 */
-  margin-left: 84px;
-  color: #e2e8f0;
-  /* 自適應字級，避免手機上換行 */
-  font-size: clamp(16px, 5.6vw, 28px);
-  line-height: 1.15;
-  white-space: nowrap;
-}
-
-.hero__body {
-  padding: 0 8px 8px;
-  display: grid;
-  gap: 10px;
-}
-
+/* ---------- 共用 section ---------- */
 .section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   width: 100%;
   box-sizing: border-box;
   min-width: 0;
 }
 
 .section.muted {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 18px;
-  padding: 28px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 32px 28px;
 }
 
 .section__header {
   display: grid;
-  gap: 6px;
+  gap: 8px;
+  max-width: 860px;
 }
 
 .section__header h2 {
   margin: 0;
-  font-size: 20px;
-  color: #0f172a;
+  font-size: clamp(22px, 3vw, 28px);
+  line-height: 1.4;
+  color: var(--color-ink);
 }
 
-.section__header .eyebrow {
-  font-size: 18px;
-  color: #f97316;
+.eyebrow {
+  margin: 0;
+  color: var(--color-accent-strong);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 15px;
 }
 
-.description {
-  color: #475569;
+.section__lead {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+  line-height: 1.8;
+}
+
+.section__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+/* ---------- 價值支柱 ---------- */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pillar {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-accent);
+  border-radius: var(--radius-card);
+  padding: 24px 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pillar__icon {
+  font-size: 34px;
+  line-height: 1;
+}
+
+.pillar h3 {
+  margin: 0;
+  font-size: 19px;
+  color: var(--color-ink);
+}
+
+.pillar p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+.pillar ul {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.pillar li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--color-ink);
+  font-size: 14.5px;
   line-height: 1.6;
 }
 
+.pillar li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+/* ---------- 對比區 ---------- */
+.compare {
+  display: grid;
+  gap: 10px;
+}
+
+.compare__head,
+.compare__row {
+  display: grid;
+  grid-template-columns: 130px 1fr 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.compare__col-title {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.compare__col-title.generic {
+  background: #f1f5f9;
+  color: var(--color-faint);
+}
+
+.compare__col-title.abi {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.compare__aspect {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: var(--color-ink);
+  font-size: 15px;
+}
+
+.compare__cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  line-height: 1.6;
+  font-size: 14.5px;
+}
+
+.compare__cell.generic {
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  color: var(--color-faint);
+}
+
+.compare__cell.abi {
+  background: var(--color-accent-soft);
+  border: 1px solid #a7f3d0;
+  color: var(--color-ink);
+}
+
+.compare__cell .mark {
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.compare__cell.generic .mark {
+  color: #cbd5e1;
+}
+
+.compare__cell.abi .mark {
+  color: var(--color-accent);
+}
+
+/* ---------- 功能卡 ---------- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.feature {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.feature:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
+}
+
+.feature__icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border-radius: 12px;
+  background: var(--color-primary-soft);
+}
+
+.feature h3 {
+  margin: 4px 0 0;
+  font-size: 18px;
+  color: var(--color-ink);
+}
+
+.feature p {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.7;
+  font-size: 14.5px;
+}
+
+.feature ul {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: grid;
+  gap: 6px;
+}
+
+.feature li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--color-ink);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.feature li::before {
+  content: '•';
+  position: absolute;
+  left: 6px;
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+/* ---------- 生成式 APP 專區 ---------- */
+.section.genapp {
+  background: linear-gradient(135deg, #0f2b6e 0%, var(--color-primary-strong) 55%, #114b8f 100%);
+  border-radius: 20px;
+  padding: 40px 32px;
+  color: #e2e8f0;
+}
+
+.section.genapp .section__header h2 {
+  color: #fff;
+}
+
+.eyebrow.light {
+  color: #6ee7b7;
+}
+
+.section.genapp .section__lead {
+  color: #cbd5e1;
+}
+
+.genapp-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.genapp-step {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.genapp-step__no {
+  font-size: 15px;
+  font-weight: 800;
+  color: #6ee7b7;
+  letter-spacing: 0.12em;
+}
+
+.genapp-step h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 19px;
+}
+
+.genapp-step p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.75;
+  font-size: 14.5px;
+}
+
+.genapp-extra {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+}
+
+.genapp-capabilities,
+.genapp-security {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+}
+
+.genapp-capabilities h3,
+.genapp-security h3 {
+  margin: 0 0 10px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.genapp-capabilities ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+}
+
+.genapp-capabilities li {
+  position: relative;
+  padding-left: 22px;
+  color: #e2e8f0;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.genapp-capabilities li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #6ee7b7;
+  font-weight: 800;
+}
+
+.genapp-security p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.75;
+  font-size: 14.5px;
+}
+
+/* ---------- 架構與整合 ---------- */
+.architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.arch-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.arch-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.arch-text {
+  padding: 18px 20px;
+  color: var(--color-ink);
+  line-height: 1.75;
+}
+
+.arch-text :deep(h2),
+.arch-text :deep(h3) {
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.arch-text :deep(ul) {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+  color: var(--color-muted);
+}
+
+/* ---------- 卡片網格（技能／趨勢／方案共用） ---------- */
 .card-grid {
   display: grid;
   gap: 18px;
@@ -881,11 +1323,11 @@ const submitContactForm = async () => {
 }
 
 .panel-card {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
   overflow: hidden;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -893,6 +1335,12 @@ const submitContactForm = async () => {
   width: 100%;
   max-width: 100%;
   height: 100%;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.panel-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
 }
 
 .panel-card__image {
@@ -902,7 +1350,7 @@ const submitContactForm = async () => {
 }
 
 .panel-card__body {
-  padding: 16px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -910,170 +1358,139 @@ const submitContactForm = async () => {
   min-width: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  border-top: 3px solid var(--color-accent);
 }
 
 .panel-card__body h3 {
-  margin: 0 0 6px 0;
-  color: #0f172a;
+  margin: 0;
+  color: var(--color-ink);
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
   flex-shrink: 0;
+  font-size: 17px;
 }
 
 .panel-card__body p {
   margin: 0;
-  color: #475569;
+  color: var(--color-muted);
   word-wrap: break-word;
   overflow-wrap: break-word;
   flex-shrink: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
 }
 
-.overlay-title .panel-card__body {
-  margin-top: 0;
-  background: #e0f2ff;
-  color: #0f172a;
-  border-top: 1px solid #cbd5e1;
-}
-
-.stacked-panels {
-  display: grid;
-  gap: 16px;
-}
-
-.panel.wide {
-  background: #fff;
-  border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  overflow: hidden;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-}
-
-.panel__image {
-  height: 240px;
-  background-size: cover;
-  background-position: center;
-}
-
-.panel__body {
-  padding: 16px;
-}
-
-.panel__body h3 {
-  margin: 0 0 6px 0;
-}
-
-.panel__body p {
-  margin: 0;
-  color: #475569;
-}
-
-.architecture-list {
-  display: grid;
-  gap: 16px;
-}
-
-.arch-panel {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-}
-
-.arch-image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.arch-text {
-  padding: 16px;
-  color: #0f172a;
-  line-height: 1.7;
-}
-
-.skill-card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
-}
-
-.skill-card__image {
-  height: 160px;
-  background-size: cover;
-  background-position: center;
-}
-
-.skill-card__title {
-  padding: 12px 10px;
-  font-weight: 700;
-  color: #0f172a;
-}
-
+/* ---------- 導入方案 ---------- */
 .plan {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.07);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .plan h3 {
-  margin: 0 0 10px 0;
+  margin: 0;
+  font-size: 20px;
+  color: var(--color-primary-strong);
+}
+
+.plan__tagline {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+  min-height: 44px;
 }
 
 .plan ul {
   list-style: none;
-  padding: 0;
+  padding: 12px 0 0;
   margin: 0;
   display: grid;
   gap: 8px;
-  color: #475569;
+  color: var(--color-ink);
+  border-top: 1px dashed var(--color-border);
 }
 
-
-.contact-panel {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+.plan li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 14.5px;
+  line-height: 1.6;
 }
 
-.contact-info {
-  padding-bottom: 24px;
-  border-bottom: 1px solid #e2e8f0;
+.plan li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: 800;
 }
 
-.contact-info h3 {
-  margin: 0 0 12px 0;
-  font-size: 20px;
-  color: #0f172a;
-}
-
-.contact-form h3 {
-  margin: 0 0 16px 0;
-  font-size: 20px;
-  color: #0f172a;
-}
-
-.contact-list {
+/* ---------- FAQ ---------- */
+.faq-list {
   display: grid;
   gap: 10px;
 }
 
-.contact-item__label {
-  font-size: 13px;
-  color: #475569;
+.faq-item {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
 }
 
-.contact-item__value {
+.faq-item summary {
+  cursor: pointer;
+  padding: 16px 18px;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-ink);
+  list-style: none;
+  position: relative;
+  padding-right: 42px;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--color-accent);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] summary::after {
+  content: '−';
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 0 18px 16px;
+  color: var(--color-muted);
+  line-height: 1.8;
+}
+
+/* ---------- 聯繫表單 ---------- */
+.contact-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 26px;
+  box-shadow: var(--shadow-card);
+  max-width: 860px;
 }
 
 .form-fields {
@@ -1088,7 +1505,7 @@ const submitContactForm = async () => {
 
 .form-fields label > span {
   font-weight: 600;
-  color: #0f172a;
+  color: var(--color-ink);
   font-size: 14px;
 }
 
@@ -1102,10 +1519,10 @@ textarea {
   width: 100%;
   padding: 11px 12px;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
   font-size: 14px;
-  color: #0f172a;
+  color: var(--color-ink);
   box-sizing: border-box;
 }
 
@@ -1116,8 +1533,8 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: 2px solid #2563eb;
-  border-color: #2563eb;
+  outline: 2px solid var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .contact-form .btn.primary.full {
@@ -1144,23 +1561,26 @@ textarea:focus {
   border-radius: 8px;
 }
 
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
+/* ---------- 關於 ---------- */
 .about {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 18px;
-  color: #475569;
-  line-height: 1.7;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+  color: var(--color-muted);
+  line-height: 1.75;
   display: grid;
   gap: 12px;
 }
 
+.about :deep(h1),
+.about :deep(h2),
+.about :deep(h3) {
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ---------- Modal ---------- */
 .modal {
   position: fixed;
   left: 0;
@@ -1191,10 +1611,12 @@ button:disabled {
 }
 
 .modal__body {
-  color: #0f172a;
+  color: var(--color-ink);
   line-height: 1.7;
   /* modal 內閱讀性提升：最小字體放大二級 */
   font-size: 18px;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
 /* v-html 產生的內容不會帶 scoped attribute，需用 :deep 才能覆寫最小字級 */
@@ -1210,8 +1632,8 @@ button:disabled {
   bottom: 16px;
   transform: translateX(-50%);
   z-index: 41;
-  border: 1px solid #fb923c;
-  background: #f97316; /* 橙底白字：更醒目 */
+  border: 1px solid #34d399;
+  background: var(--color-accent);
   width: 56px;
   height: 56px;
   border-radius: 9999px;
@@ -1222,27 +1644,42 @@ button:disabled {
   justify-content: center;
   color: #ffffff;
   box-shadow:
-    0 10px 22px rgba(249, 115, 22, 0.35),
+    0 10px 22px rgba(5, 150, 105, 0.35),
     0 6px 16px rgba(15, 23, 42, 0.12);
   transition: all 0.2s ease;
 }
 
 .modal__close:hover {
-  background: #ea580c;
-  border-color: #fdba74;
+  background: var(--color-accent-strong);
+  border-color: #6ee7b7;
   box-shadow:
-    0 14px 26px rgba(234, 88, 12, 0.45),
+    0 14px 26px rgba(4, 120, 87, 0.45),
     0 10px 20px rgba(15, 23, 42, 0.14);
   transform: translateX(-50%) translateY(-1px);
 }
 
 .modal__close:focus-visible {
-  outline: 3px solid rgba(249, 115, 22, 0.45);
+  outline: 3px solid rgba(5, 150, 105, 0.45);
   outline-offset: 3px;
 }
 
+/* ---------- RWD ---------- */
 @media (max-width: 1024px) {
   .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__media {
+    order: -1;
+  }
+
+  .pillar-grid,
+  .feature-grid,
+  .genapp-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .genapp-extra {
     grid-template-columns: 1fr;
   }
 }
@@ -1251,8 +1688,35 @@ button:disabled {
   .card-grid--1,
   .card-grid--2,
   .card-grid--3,
-  .card-grid--4 {
+  .card-grid--4,
+  .card-grid--two,
+  .pillar-grid,
+  .feature-grid,
+  .genapp-steps,
+  .architecture-grid {
     grid-template-columns: 1fr;
+  }
+
+  .genapp-capabilities ul {
+    grid-template-columns: 1fr;
+  }
+
+  /* 對比區改為堆疊卡片 */
+  .compare__head {
+    display: none;
+  }
+
+  .compare__row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  .compare__aspect {
+    font-size: 15px;
   }
 
   .panel-card__body {
@@ -1269,25 +1733,24 @@ button:disabled {
     padding: 24px 14px 48px;
   }
 
-  .hero__image {
-    height: 240px;
-  }
-
-  /* 手機：取消副標縮排，避免被擠到換行 */
-  .title-sub {
-    margin-left: 0;
-  }
-
   .section.muted {
-    padding: 20px;
+    padding: 22px 18px;
+  }
+
+  .section.genapp {
+    padding: 28px 20px;
   }
 
   .section__header h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .panel-card__image {
     height: 200px;
+  }
+
+  .hero__ctas .btn {
+    width: 100%;
   }
 }
 

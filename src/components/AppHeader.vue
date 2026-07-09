@@ -6,11 +6,12 @@ const router = useRouter()
 const route = useRoute()
 
 const navItems = [
-  { label: '趨勢應用', hash: 'trends' },
-  { label: '產品架構', hash: 'architecture' },
+  { label: '產品功能', hash: 'features' },
+  { label: '生成式APP', hash: 'genapp' },
   { label: '業態技能', hash: 'skills' },
   { label: '導入方案', hash: 'solutions' },
-  { label: '業務聯繫', hash: 'contact' },
+  { label: '市場趨勢', hash: 'trends' },
+  { label: '常見問題', hash: 'faq' },
   { label: '關於資傳', hash: 'about' }
 ] as const
 
@@ -21,7 +22,8 @@ const headerRef = ref<HTMLElement | null>(null)
 const activeHash = ref<NavHash>(navItems[0].hash)
 const sectionIds = navItems.map((x) => x.hash) as NavHash[]
 
-const scrollToSection = async (hash: NavHash) => {
+// 支援導覽項目與「免費諮詢」CTA（contact 區塊不在導覽列，但仍可捲動抵達）
+const scrollToSection = async (hash: NavHash | 'contact') => {
   if (route.path !== '/') {
     await router.push({ path: '/' })
   }
@@ -31,7 +33,9 @@ const scrollToSection = async (hash: NavHash) => {
     const headerHeight = headerRef.value?.offsetHeight ?? 72
     const top = target.getBoundingClientRect().top + window.scrollY - headerHeight
     window.scrollTo({ top, behavior: 'smooth' })
-    activeHash.value = hash
+    if ((sectionIds as string[]).includes(hash)) {
+      activeHash.value = hash as NavHash
+    }
   }
   isNavOpen.value = false
 }
@@ -74,7 +78,8 @@ onBeforeUnmount(() => {
 <template>
   <header ref="headerRef" class="header">
     <RouterLink to="/" class="header__brand" aria-label="ABI Assistant Home">
-      <img class="logo-img" src="@/assets/images/ABI-Assistant-Logo-2.png" alt="ABI Assistant" />
+      <!-- 注意：ABI-Assistant-Logo-2.png 實為 chatPOS 商標，本站需使用 ABI Assistant 品牌 Logo-3 -->
+      <img class="logo-img" src="@/assets/images/ABI-Assistant-Logo-3.png" alt="ABI Assistant" />
     </RouterLink>
 
     <nav class="nav desktop">
@@ -90,6 +95,9 @@ onBeforeUnmount(() => {
     </nav>
 
     <div class="header__actions">
+      <button class="cta-button" type="button" @click="scrollToSection('contact')">
+        免費諮詢
+      </button>
       <button :class="['menu-toggle', { open: isNavOpen }]" type="button" @click="toggleNav">
         <span class="bar" />
         <span class="bar" />
@@ -142,7 +150,8 @@ onBeforeUnmount(() => {
 .logo-img {
   width: 200px;
   height: 70px;
-  object-fit: contain;
+  /* Logo-3 原圖四周留白較大，以 cover 置中裁切讓標誌填滿可視範圍 */
+  object-fit: cover;
   flex-shrink: 0;
 }
 
@@ -211,6 +220,32 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.cta-button {
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-accent, #059669), #10b981);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.cta-button:hover {
+  background: linear-gradient(135deg, var(--color-accent-strong, #047857), var(--color-accent, #059669));
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(5, 150, 105, 0.28);
+}
+
+@media (max-width: 480px) {
+  .cta-button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
 }
 
 .menu-toggle {
