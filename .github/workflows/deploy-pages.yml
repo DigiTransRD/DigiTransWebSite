@@ -32,6 +32,10 @@ jobs:
 
       - name: Build site
         run: npm run build
+        env:
+          # 業務洽詢表單端點；簽章金鑰須與 AbiAsstAPI Web.config 的 AbiSales:SignKey 一致
+          VITE_ABISALES_API_URL: https://www.digitrans.cloud:4430/api/abisales
+          VITE_ABISALES_SIGN_KEY: ${{ secrets.ABISALES_SIGN_KEY }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

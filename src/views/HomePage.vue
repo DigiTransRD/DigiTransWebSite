@@ -16,6 +16,7 @@ import {
   genAppSecurityNote,
   faqItems
 } from '@/content/homeContent'
+import { submitSalesContact, SalesContactSubmitError } from '@/api/abisales'
 
 type Card = {
   id: string
@@ -481,28 +482,22 @@ const submitting = ref(false)
 const submitSuccess = ref(false)
 const submitError = ref('')
 
+// 送出失敗一律據實回報，不改以郵件草稿等替代管道，避免使用者誤以為洽詢已成立
 const submitContactForm = async () => {
   submitting.value = true
   submitSuccess.value = false
   submitError.value = ''
 
   try {
-    const subject = encodeURIComponent(`ABI Assistant website inquiry | ${contactForm.company} | ${contactForm.name}`)
-    const body = encodeURIComponent([
-      'ABI Assistant website inquiry',
-      '',
-      `Locale: ${locale.value}`,
-      `Company: ${contactForm.company}`,
-      `Name: ${contactForm.name}`,
-      `Title: ${contactForm.title}`,
-      `Phone: ${contactForm.phone}`,
-      `Email: ${contactForm.email}`,
-      '',
-      'Message:',
-      contactForm.message
-    ].join('\n'))
-
-    window.location.href = `mailto:digitrans.tw@gmail.com?subject=${subject}&body=${body}`
+    await submitSalesContact({
+      company: contactForm.company,
+      name: contactForm.name,
+      title: contactForm.title,
+      phone: contactForm.phone,
+      email: contactForm.email,
+      message: contactForm.message,
+      lang: locale.value
+    })
 
     submitSuccess.value = true
     contactForm.company = ''
@@ -512,9 +507,10 @@ const submitContactForm = async () => {
     contactForm.email = ''
     contactForm.message = ''
   } catch (error) {
-    submitError.value = 'Unable to open your mail client. Please email digitrans.tw@gmail.com directly.'
+    const reason = error instanceof SalesContactSubmitError ? error.message : '發生未預期的錯誤'
+    submitError.value = `洽詢送出失敗（${reason}），請直接聯繫業務人員：digitrans.tw@gmail.com`
     if (import.meta.env.DEV) {
-      console.error('Contact form action failed:', error)
+      console.error('Contact form submit failed:', error)
     }
   } finally {
     submitting.value = false
@@ -772,7 +768,7 @@ const submitContactForm = async () => {
           <button type="submit" class="btn primary full" :disabled="submitting">
             {{ submitting ? '送出中...' : '送出洽詢' }}
           </button>
-          <p v-if="submitSuccess" class="success-message">已替你開啟郵件草稿，請確認後送出。</p>
+          <p v-if="submitSuccess" class="success-message">已收到你的洽詢，我們會盡快與你聯繫。</p>
           <p v-if="submitError" class="error-message">{{ submitError }}</p>
         </form>
       </div>
