@@ -35,7 +35,7 @@ export const capabilities = [
 ]
 export const productFeatures = [
   { id: 'rapid-build', number: '01', label: '快速建置', description: '沿用既有資料與介面，生成表單、報表與 APP；工程師補齊客製，縮短從需求到應用的距離。', link: '了解建置與導入方式', path: '/deployment/#build' },
-  { id: 'line', number: '02', label: 'LINE 生態整合', description: '整合 LINE 對話、LIFF 與身分綁定，串接查詢、表單及報表，讓團隊從熟悉的入口開始使用。', link: '了解 LINE 整合能力', path: '/integrations/#line' },
+  { id: 'line', number: '02', label: 'LINE 生態整合', description: '營運資料庫可留在店內，常用操作從 LINE 開始。整合對話、LIFF、表單、報表與身分綁定，讓日常管理融入熟悉的工作入口。', link: '了解 LINE 整合能力', path: '/integrations/#line' },
   { id: 'industry-skills', number: '03', label: '業態專屬技能', description: '將行業術語、營運知識與作業方法轉成專屬技能，讓 AI 理解你的業態與角色需求。', link: '深入業態技能設計', path: '/architecture/#skills' },
   { id: 'business-frameworks', number: '04', label: '企業流程框架', description: '以企業工作步驟、輸出規格與檢核規則引導 AI 任務，結合工具權限，落實可驗收的執行流程。', link: '深入企業流程框架', path: '/architecture/#frameworks' },
 ]

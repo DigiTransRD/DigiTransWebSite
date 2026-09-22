@@ -16,7 +16,7 @@ const readingPaths = [
       <div class="hero-copy">
         <p class="eyebrow hero-eyebrow"><span class="status-dot" aria-hidden="true"></span> ABI ASSISTANT / BUSINESS AI AGENT</p>
         <h1>讓既有系統，<br /><em>成為 AI 原生系統。</em></h1>
-        <p class="hero-description"><span class="hero-name">ABI（{{ productIdentity.fullName }}）</span>{{ productIdentity.chineseName }}，接通企業資料與流程。<br />生成<span>表單、報表、APP，通用功能立即上線。</span><br />專屬需求，由前進部署工程師協助擴充。</p>
+        <p class="hero-description"><span class="hero-name">ABI（{{ productIdentity.fullName }}）</span>輕量級{{ productIdentity.chineseName }}，<br />專為零售、流通、餐飲與旅宿中小店家打造。<br />生成<span>表單、報表、APP，通用功能立即上線。</span><br /><span>不必自建 AI 團隊，也能啟動 AI 轉型。</span></p>
         <div class="hero-actions"><RouterLink to="/#solutions" class="button">選擇你的導入方案 <ArrowIcon direction="down" tone="light" /></RouterLink><RouterLink to="/#applications" class="button button-ghost">看三種商業應用 <ArrowIcon direction="down" /></RouterLink></div>
         <div class="hero-assurance"><span>沿用既有系統</span><span>企業資料治理</span><span>工程師駐點協作</span></div>
         <RouterLink :to="productIdentity.path" class="text-link hero-product-link">認識 ABI Assistant <ArrowIcon /></RouterLink>
@@ -66,7 +66,7 @@ const readingPaths = [
 
   <section class="section-pad scenario-section">
     <div class="container">
-      <div class="section-heading"><div><p class="eyebrow">FROM INTENT TO OUTCOME</p><h2>說出需求，<br />看見工作的下一步。</h2></div><p class="section-description">用熟悉的業務語言開始。<br />讓資料、工具與應用，一起為工作服務。</p></div>
+      <div class="section-heading"><div><p class="eyebrow">FROM INTENT TO OUTCOME</p><h2>報表用問的，<br />表單用說的，<br />管理系統用生成的。</h2></div><p class="section-description">用熟悉的業務語言開始。<br />讓資料、工具與應用，一起為工作服務。</p></div>
       <ScenarioExplorer />
     </div>
   </section>
