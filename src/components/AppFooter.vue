@@ -1,158 +1,19 @@
 <script setup lang="ts">
-import { nextTick } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-
-const router = useRouter()
-const route = useRoute()
-
-// 頁尾快速連結：對應首頁各區塊 id
-const quickLinks = [
-  { label: '產品功能', hash: 'features' },
-  { label: '生成式APP', hash: 'genapp' },
-  { label: '業態技能', hash: 'skills' },
-  { label: '導入方案', hash: 'solutions' },
-  { label: '常見問題', hash: 'faq' },
-  { label: '業務聯繫', hash: 'contact' }
-] as const
-
-const scrollToSection = async (hash: string) => {
-  if (route.path !== '/') {
-    await router.push({ path: '/' })
-  }
-  await nextTick()
-  const target = document.getElementById(hash)
-  if (target) {
-    const headerHeight =
-      Number.parseInt(
-        getComputedStyle(document.documentElement).getPropertyValue('--header-height'),
-        10
-      ) || 72
-    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight
-    window.scrollTo({ top, behavior: 'smooth' })
-  }
-}
+import ArrowIcon from './ArrowIcon.vue'
+import { capabilities } from '../content/homeContent'
 </script>
-
 <template>
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__brand">
-        <div class="brand-title">ABI Assistant</div>
-        <p class="tagline">商用人工智慧助理．中小店家的智慧轉型夥伴</p>
-        <p class="pitch">雲地混合架構｜LINE 官方帳號整合｜業態訂製技能包</p>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <RouterLink to="/" class="footer-logo" aria-label="ABI Assistant 商用人工智慧助理 首頁"><img :src="'/abi-wordmark.svg'" class="brand-mark" width="84" height="49" alt="ABI" /><span class="brand-copy"><span class="brand-title">ASSISTANT</span><span class="brand-description">商用人工智慧助理</span></span></RouterLink>
+        <p>讓企業的既有優勢，<br />成為 AI 時代的下一步。</p>
+        <span class="eyebrow">BUSINESS AI AGENT</span>
       </div>
-      <div class="footer__links">
-        <div class="col-title">快速連結</div>
-        <button
-          v-for="link in quickLinks"
-          :key="link.hash"
-          class="footer-link"
-          type="button"
-          @click="scrollToSection(link.hash)"
-        >
-          {{ link.label }}
-        </button>
-      </div>
-      <div class="footer__contact">
-        <div class="col-title">聯絡我們</div>
-        <a href="mailto:digitrans.tw@gmail.com">digitrans.tw@gmail.com</a>
-        <p class="company">資傳數位有限公司</p>
-        <p class="company">Digital Transformation Consulting Ltd.</p>
-      </div>
+      <div><h2>商業應用</h2><RouterLink v-for="item in capabilities" :key="item.id" :to="item.path">{{ item.label }}</RouterLink><RouterLink to="/integrations/">既有系統整合</RouterLink></div>
+      <div><h2>深入了解</h2><RouterLink to="/abi-assistant/">認識 ABI Assistant</RouterLink><RouterLink to="/architecture/">技術架構</RouterLink><RouterLink to="/governance/">安全治理</RouterLink><RouterLink to="/evaluation/">能力與驗收指標</RouterLink><RouterLink to="/#solutions">三種導入方案</RouterLink><RouterLink to="/deployment/">FDE 導入服務</RouterLink></div>
+      <div><h2>資傳數位</h2><RouterLink to="/about/">關於我們</RouterLink><RouterLink to="/articles/skills/">產業技能文章</RouterLink><RouterLink to="/articles/trends/">趨勢與觀點</RouterLink><a href="mailto:digitrans.tw@gmail.com">digitrans.tw@gmail.com <ArrowIcon /></a></div>
     </div>
-    <div class="footer__copy">© 2026 Digital Transformation Consulting Ltd. All rights reserved.</div>
+    <div class="container footer-bottom"><span>© {{ new Date().getFullYear() }} 資傳數位有限公司</span><span>Digital Transformation Consulting Ltd.</span><RouterLink to="/contact/#data-notice">洽詢資料說明</RouterLink></div>
   </footer>
 </template>
-
-<style scoped>
-.footer {
-  background: #0f172a;
-  color: #e2e8f0;
-  padding: 44px 20px 28px;
-}
-
-.footer__inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 32px;
-}
-
-.brand-title {
-  font-size: 22px;
-  font-weight: 800;
-  color: #fff;
-}
-
-.tagline {
-  margin: 8px 0 4px;
-  color: #cbd5e1;
-}
-
-.pitch {
-  margin: 0;
-  color: #64748b;
-  font-size: 13.5px;
-}
-
-.col-title {
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 12px;
-}
-
-.footer__links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.footer-link {
-  background: none;
-  border: none;
-  padding: 0;
-  color: #cbd5e1;
-  font-size: 14.5px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.footer-link:hover {
-  color: #6ee7b7;
-}
-
-.footer__contact a {
-  color: #cbd5e1;
-  text-decoration: none;
-  font-size: 14.5px;
-}
-
-.footer__contact a:hover {
-  color: #6ee7b7;
-}
-
-.company {
-  margin: 8px 0 0;
-  color: #64748b;
-  font-size: 13.5px;
-}
-
-.footer__copy {
-  max-width: 1200px;
-  margin: 28px auto 0;
-  padding-top: 18px;
-  border-top: 1px solid rgba(226, 232, 240, 0.14);
-  color: #94a3b8;
-  font-size: 13px;
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .footer__inner {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-}
-</style>

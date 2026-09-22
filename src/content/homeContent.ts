@@ -1,241 +1,57 @@
-/**
- * 首頁結構化區塊文案模組
- *
- * 價值支柱、對比表、六大功能、生成式 APP 專區與 FAQ 屬於固定版型的結構化內容，
- * 沿用 src/content/articles.ts 以 TypeScript 管理內容的既有慣例，
- * 提供型別安全並避免為每個區塊新增 Markdown 解析器。
- *
- * 文案依據：ABI/Docs/Specifications/AbiAssist 與 AbiGenApp 規格文件所描述之既有功能，
- * 不得加入規格未涵蓋的能力描述。
- */
+import solutionsMarkdown from '../assets/context/solutions.md?raw'
 
-/** 核心價值支柱卡片 */
-export type ValuePillar = {
-  icon: string
-  title: string
-  description: string
-  points: string[]
+const abiFullName = 'Artificial Business Intelligence'
+
+export const productIdentity = {
+  name: 'ABI Assistant',
+  fullName: abiFullName,
+  chineseName: '商用人工智能助理',
+  alternateName: '商用人工智慧助理',
+  category: 'Business AI Agent',
+  path: '/abi-assistant/',
+  definition: `ABI 是 ${abiFullName} 的縮寫。ABI Assistant 是資傳數位開發的商用人工智能助理，亦稱商用人工智慧助理，定位為連接企業資料、工具與流程的 Business AI Agent。透過生成式表單、生成式報表與生成式 APP，將自然語言需求轉為可使用的商業應用。`,
 }
 
-/** 對比區單列：同一面向下「一般雲端 AI 工具」與「ABI Assistant」的差異 */
-export type CompareRow = {
-  aspect: string
-  generic: string
-  abi: string
-}
-
-/** 產品功能卡片 */
-export type FeatureCard = {
-  icon: string
-  title: string
-  tagline: string
-  points: string[]
-}
-
-/** 生成式 APP 導入步驟 */
-export type GenAppStep = {
-  step: string
-  title: string
-  description: string
-}
-
-/** 常見問題 */
-export type FaqItem = {
-  question: string
-  answer: string
-}
-
-export const valuePillars: ValuePillar[] = [
-  {
-    icon: '🔒',
-    title: '資料留在店內，安全可控',
-    description: '雲地混合架構：營運資料保存在你店裡的主機，雲端只同步必要的鏡射資料。',
-    points: [
-      '資料主權在你手上，不必把帳務與客戶名單交給外部平台',
-      '雲地傳輸全程加密，操作留有紀錄',
-      '權限分級治理：誰能看、誰能改，都由你決定'
-    ]
-  },
-  {
-    icon: '💬',
-    title: '打開 LINE 就能用，零學習成本',
-    description: '不用學新軟體、不用記密碼，員工熟悉的 LINE 聊天室就是 AI 助理。',
-    points: [
-      'LINE 官方帳號與網頁雙入口，手機電腦都能用',
-      '掃碼完成註冊與登入，導入不折騰',
-      '老闆、店長、員工權限各自分明'
-    ]
-  },
-  {
-    icon: '⚡',
-    title: '功能用「生」的，不必等開發',
-    description: '報表用問的、表單用說的、管理系統用生成的，需求變了隨時再生成。',
-    points: [
-      '自然語言即時生成報表與表單',
-      '從既有資料庫結構生成管理系統',
-      '業態技能包直接套用，免昂貴預訓練'
-    ]
-  }
+export const quickStartSteps = [
+  { number: '01', title: '選擇應用，接通資料', description: '選擇表單、報表或 APP，提供需求、可用資料或資料庫結構，設定使用權限。' },
+  { number: '02', title: '與 AI 對話，確認成果', description: '用業務語言說明欄位、報表指標或管理功能，預覽生成成果，再依需求調整。' },
+  { number: '03', title: '生成發布，立即使用', description: '發布表單、產出報表或部署 APP，團隊即可從網頁或適用的 LINE 入口開始工作。' },
 ]
 
-export const compareRows: CompareRow[] = [
-  {
-    aspect: '資料存放',
-    generic: '對話與檔案上傳到外部雲端，資料去向難以掌握',
-    abi: '營運資料留在店內地端主機，雲端僅同步必要鏡射'
-  },
-  {
-    aspect: '使用方式',
-    generic: '另開帳號、學提示詞、適應新工具',
-    abi: '員工打開熟悉的 LINE 聊天室，直接用說的'
-  },
-  {
-    aspect: '行業理解',
-    generic: '通用知識，不懂你的商品、單據與流程',
-    abi: '業態技能包＋企業知識庫，講的是你的營運語言'
-  },
-  {
-    aspect: '系統串接',
-    generic: '碰不到店內 POS、ERP 與進銷存資料',
-    abi: 'MCP 工具箱安全對接資料庫與既有系統'
-  },
-  {
-    aspect: '產出成果',
-    generic: '給你文字建議，還要人工整理才能用',
-    abi: '直接生成可用的報表、表單與管理系統'
-  },
-  {
-    aspect: '資料操作安全',
-    generic: '無從管控，改錯了難以追回',
-    abi: '權限白名單、軟刪除、交易回滾、全程稽核'
-  }
+export const solutionPlans = solutionsMarkdown.replace(/<!--[\s\S]*?-->/g, '').split(/^##\s+/m).slice(1).map(section => {
+  const lines = section.trim().split(/\r?\n/).map(line => line.trim())
+  const name = lines[0]
+  const tagline = lines.find(line => line.startsWith('tagline:'))?.replace(/^tagline:\s*/, '')
+  const featuresStart = lines.indexOf('features:')
+  const features = lines.slice(featuresStart + 1).filter(line => line.startsWith('- ')).map(line => line.slice(2))
+  if (!name || !tagline || featuresStart < 0 || features.length === 0) throw new Error('導入方案缺少名稱、定位或服務項目：' + section)
+  return { name, tagline, features }
+})
+
+export const capabilities = [
+  { id: 'forms', number: '01', label: '生成式表單', english: 'GENERATIVE FORMS', headline: '需求說清楚，\n表單就成形。', description: '將自然語言轉為可發布、可收集、可追蹤的業務表單，讓前線資訊進入工作流程。', outcome: '把資訊收進來', path: '/capabilities/generative-forms/', points: ['自然語言設計', '公開網頁與 LINE 入口', '結構化資料收集'] },
+  { id: 'reports', number: '02', label: '生成式報表', english: 'GENERATIVE REPORTS', headline: '問對問題，\n看見經營答案。', description: '連接已授權的資料來源，把營運問題轉成可閱讀的報表，縮短從資料到決策的距離。', outcome: '讓決策有依據', path: '/capabilities/generative-reports/', points: ['營運語言提問', '資料庫與 API 介接', '可重複使用的報表'] },
+  { id: 'apps', number: '03', label: '生成式 APP', english: 'GENERATIVE APPS', headline: '既有資料庫，\n長出新應用。', description: '從資料結構與業務關聯出發，生成具備操作介面、權限與資料存取規則的商業 APP。', outcome: '讓工作執行下去', path: '/capabilities/generative-app/', points: ['Schema 驅動生成', '主從明細與關聯操作', '受控發布與 Runtime'] },
 ]
-
-export const featureCards: FeatureCard[] = [
-  {
-    icon: '💬',
-    title: 'AI 對話助理',
-    tagline: '在 LINE 或瀏覽器直接交辦工作：查庫存、問業績、找文件、追流程。',
-    points: [
-      'LINE 官方帳號與本機網頁雙入口',
-      '本地模型或雲端頂級模型自由切換',
-      '一人多店：多機台註冊與端點選擇'
-    ]
-  },
-  {
-    icon: '📊',
-    title: '即時生成報表',
-    tagline: '想看什麼數字，用問的就有，不必等報表開發排程。',
-    points: [
-      '自然語言查詢營運數據',
-      '即時彙總，雲端同步隨處檢視',
-      '依角色權限控管可見資料範圍'
-    ]
-  },
-  {
-    icon: '📝',
-    title: '即時生成表單',
-    tagline: '說出需求，表單立刻上線收單，資料直接進你的資料庫。',
-    points: [
-      '公開表單、LINE 表單、聊天室統計三種模式',
-      '收單即寫入店內資料庫，成功才算數',
-      '可介接 Excel 與既有查詢 API 帶入選項'
-    ]
-  },
-  {
-    icon: '🧩',
-    title: '生成式管理系統',
-    tagline: '從資料庫結構直接長出管理後台，一鍵部署成獨立網站。',
-    points: [
-      '供應商、採購、進出貨等功能頁自動生成',
-      '帳號密碼或 LINE 掃碼登入',
-      '詳見下方「生成式 APP」專區'
-    ]
-  },
-  {
-    icon: '📚',
-    title: '企業知識庫',
-    tagline: '商品資料、SOP、合約文件交給 AI 讀，問了就答。',
-    points: [
-      '文檔解析與語意檢索',
-      '聊天室直接問，依權限回答',
-      '知識沉澱在系統，不再散落各處'
-    ]
-  },
-  {
-    icon: '🔁',
-    title: '企業流程管理',
-    tagline: '進、銷、存、退、轉，營運流程的 AI 輔助。',
-    points: [
-      '工作流程狀態管理與簽核',
-      '跨系統資料一致性',
-      '失敗自動回滾，留有稽核紀錄'
-    ]
-  }
+export const productFeatures = [
+  { id: 'rapid-build', number: '01', label: '快速建置', description: '沿用既有資料與介面，生成表單、報表與 APP；工程師補齊客製，縮短從需求到應用的距離。', link: '了解建置與導入方式', path: '/deployment/#build' },
+  { id: 'line', number: '02', label: 'LINE 生態整合', description: '整合 LINE 對話、LIFF 與身分綁定，串接查詢、表單及報表，讓團隊從熟悉的入口開始使用。', link: '了解 LINE 整合能力', path: '/integrations/#line' },
+  { id: 'industry-skills', number: '03', label: '業態專屬技能', description: '將行業術語、營運知識與作業方法轉成專屬技能，讓 AI 理解你的業態與角色需求。', link: '深入業態技能設計', path: '/architecture/#skills' },
+  { id: 'business-frameworks', number: '04', label: '企業流程框架', description: '以企業工作步驟、輸出規格與檢核規則引導 AI 任務，結合工具權限，落實可驗收的執行流程。', link: '深入企業流程框架', path: '/architecture/#frameworks' },
 ]
-
-export const genAppSteps: GenAppStep[] = [
-  {
-    step: '01',
-    title: '連上資料結構',
-    description:
-      '讀取既有 POS、ERP、進銷存系統的資料庫結構，或匯入 SQL 結構檔。只讀結構、不動業務資料，資料庫帳密永遠留在地端。'
-  },
-  {
-    step: '02',
-    title: '與 AI 對話定案',
-    description:
-      'AI 分析資料表並規劃功能藍圖：供應商管理、採購單、進貨單、出貨單……由你逐項確認後定案，AI 不會擅自作主。'
-  },
-  {
-    step: '03',
-    title: '一鍵生成部署',
-    description:
-      '依定案藍圖自動產生功能頁與操作介面，封裝部署成獨立網站。員工用帳號密碼或 LINE 掃碼登入，馬上開始使用。'
-  }
+export const faqItems = [
+  { question: '可以直接上線，還是需要先做客製開發？', answer: '生成式表單、生成式報表與生成式 APP 的通用功能已可立即上線使用。完成安裝、模型、資料來源與權限設定後，即可開始生成、發布與操作；企業專屬技能、特殊流程與深度介接由前進部署工程師協助客製。' },
+  { question: 'ABI Assistant 是什麼？', answer: productIdentity.definition },
+  { question: 'Business AI Agent 如何協助企業實際工作？', answer: 'Business AI Agent 是能結合企業資料與授權工具執行工作的 AI 助理。ABI Assistant 可生成資料收集表單、營運報表與管理 APP，並透過業態技能及企業流程框架理解任務；實際資料操作仍由權限、工具介面與業務規則控制。' },
+  { question: '導入 ABI，需要汰換現有 ERP、POS 或 CRM 嗎？', answer: '通常可先保留既有系統，由前進部署工程師盤點資料庫、API、帳號與流程，選擇一個明確場景介接。是否能直接寫回原系統，取決於原廠介面、資料結構、授權及交易規則，會在導入評估時確認。' },
+  { question: '三種生成式應用可以分別導入嗎？', answer: '可以依需求從一種應用切入：用表單改善資料收集、用報表縮短查詢分析時間，或以 APP 補齊既有系統操作介面。需要串起跨系統流程時，再由工程師配置工具、技能與資料交換規則。' },
+  { question: '企業資料是否都需要送到雲端？', answer: 'ABI 採雲地協作架構。業務資料庫由地端服務介接，模型、同步資料、報表與使用者入口依情境配置。採用雲端模型時，必要上下文可能傳至模型服務；導入時會逐項定義資料流、可送出欄位與保存邊界。' },
+  { question: 'ABI 如何處理企業特有的規則與流程？', answer: '前進部署工程師（Forward Deployed Engineer，FDE）深入現場，將企業術語、資料定義與操作方法整理成專屬技能、工具與框架；必要時快速開發擴充功能，再以真實使用情境驗收。' },
+  { question: '多久可以導入？效益怎麼衡量？', answer: '時程依介面完整度、資料品質、權限及客製範圍評估。先挑選高頻且可衡量的流程，記錄原始處理時間、人工步驟及正確率，再比較導入後的完整工作結果，據此決定擴展範圍。' },
 ]
-
-export const genAppCapabilities: string[] = [
-  '單表與主從明細資料維護',
-  '批次編輯與公式欄位計算',
-  '流程狀態簽核',
-  '關聯資料維護',
-  '帳號、角色、功能權限治理',
-  '軟刪除、交易回滾與全程稽核'
-]
-
-export const genAppSecurityNote =
-  '生成範圍僅限受控的前端功能頁與經權限治理的資料操作，不產生任意後端程式；資料庫連線資訊與敏感資料不進雲端、不進部署包。'
-
-export const faqItems: FaqItem[] = [
-  {
-    question: '我不懂 IT，導入會很複雜嗎？',
-    answer:
-      '不會。在店內主機安裝地端程式後，用 LINE 掃碼即完成綁定註冊；日常操作都在 LINE 聊天室或瀏覽器進行，不需要專職工程師。'
-  },
-  {
-    question: '資料會不會外洩給 AI 模型或雲端平台？',
-    answer:
-      '營運資料保存在店內地端主機，雲端只同步必要的鏡射資料且傳輸全程加密。你也可以選擇在本地運行模型，對話內容完全不出店門。'
-  },
-  {
-    question: '需要準備很高階的設備嗎？',
-    answer:
-      'ABI Assistant 是輕量級系統，一般商用主機即可運行；若要使用本地 AI 模型，再依模型規模配置硬體即可，我們會協助評估。'
-  },
-  {
-    question: '可以接我現有的 POS、ERP 或進銷存系統嗎？',
-    answer:
-      '可以。系統支援 MSSQL、MySQL、SQLite 等資料庫對接，以及 RESTful API、Webhook 等整合方式，屬「客製整合」方案的服務範疇。'
-  },
-  {
-    question: 'AI 會不會改錯或刪錯我的資料？',
-    answer:
-      '所有資料操作都經過權限白名單與參數化查詢，寫入具交易回滾機制、刪除採軟刪除設計，且全程留有稽核紀錄，改了什麼、誰改的都查得到。'
-  },
-  {
-    question: '費用怎麼計算？',
-    answer:
-      '提供租賃、使用權買斷、客製整合三種方案，依門市規模與整合需求報價，不採按人頭訂閱。詳見「導入方案」或直接與我們聯繫。'
-  }
+export const deploymentSteps = [
+  { number: '01', title: '盤點業務現場', description: '確認高價值流程、既有系統、資料責任與驗收目標。' },
+  { number: '02', title: '接通資料與工具', description: '建立資料對應、存取範圍與可執行的工具介面。' },
+  { number: '03', title: '生成與客製', description: '生成應用，配置企業專屬技能，補齊必要的擴充功能。' },
+  { number: '04', title: '驗收與持續演進', description: '以實際操作驗證結果，交接維運，再擴展下一個場景。' },
 ]
