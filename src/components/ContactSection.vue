@@ -39,7 +39,7 @@ async function submit() {
         <div class="contact-expectations"><p><span>01</span> 釐清場景與預期成果</p><p><span>02</span> 評估資料、介面與導入範圍</p><p><span>03</span> 規劃工程協作與驗收方式</p></div>
         <a class="text-link" href="mailto:digitrans.tw@gmail.com">digitrans.tw@gmail.com <ArrowIcon /></a>
       </div>
-      <form class="contact-form" :aria-busy="submitting" @submit.prevent="submit">
+      <form id="contact-form" class="contact-form" :aria-busy="submitting" @submit.prevent="submit">
         <div class="form-heading"><h2>預約導入評估</h2><span>＊必填</span></div>
         <noscript><p class="data-notice">請啟用 JavaScript 後送出洽詢，或使用左側電子郵件聯絡我們。</p></noscript>
         <fieldset :disabled="submitting || !interactive" class="form-fields">
