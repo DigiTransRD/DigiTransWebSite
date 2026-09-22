@@ -6,7 +6,7 @@ import { capabilities } from '../content/homeContent'
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <RouterLink to="/" class="footer-logo" aria-label="ABI Assistant 商用人工智慧助理 首頁"><img :src="'/abi-wordmark.svg'" class="brand-mark" width="84" height="49" alt="ABI" /><span class="brand-copy"><span class="brand-title">ASSISTANT</span><span class="brand-description">商用人工智慧助理</span></span></RouterLink>
+        <RouterLink to="/" class="footer-logo" aria-label="ABI Assistant 商用人工智慧助理 首頁"><img :src="'/abi-wordmark.svg'" class="brand-mark" width="96" height="45" alt="ABI" /><span class="brand-copy"><span class="brand-title">ASSISTANT</span><span class="brand-description">商用人工智慧助理</span></span></RouterLink>
         <p>讓企業的既有優勢，<br />成為 AI 時代的下一步。</p>
         <span class="eyebrow">BUSINESS AI AGENT</span>
       </div>

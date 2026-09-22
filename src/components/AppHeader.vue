@@ -20,7 +20,7 @@ watch(() => route.fullPath, () => { menuOpen.value = false })
   <header class="site-header" @keydown.esc="menuOpen = false">
     <div class="header-inner container">
       <RouterLink to="/" class="brand-link" aria-label="ABI Assistant 商用人工智慧助理 首頁">
-        <img :src="'/abi-wordmark.svg'" class="brand-mark" width="84" height="49" alt="ABI" />
+        <img :src="'/abi-wordmark.svg'" class="brand-mark" width="96" height="45" alt="ABI" />
         <span class="brand-copy"><span class="brand-title">ASSISTANT</span><span class="brand-description">商用人工智慧助理</span></span>
       </RouterLink>
       <nav class="desktop-nav" aria-label="主要導覽">

@@ -66,7 +66,9 @@ a:hover .text-link .arrow-icon, .text-link:hover .arrow-icon, .button:hover .arr
 .button-accent { color: var(--navy); background: var(--accent); border-color: var(--accent); }
 .button-accent:hover { background: #c4dcfd; }
 .button:disabled { opacity: .65; cursor: wait; }
-.floating-consultation { position: fixed; z-index: 25; right: 28px; bottom: calc(var(--floating-button-bottom) + env(safe-area-inset-bottom, 0px)); min-height: var(--floating-button-height); padding: 14px 26px; border-radius: 999px; background: var(--consultation); border-color: var(--consultation-border); color: var(--ink); box-shadow: 0 0 0 3px rgba(255,255,255,.8), 0 6px 24px rgba(23,43,77,.22); }
+.floating-actions { position: fixed; z-index: 25; left: 28px; right: 28px; bottom: calc(var(--floating-button-bottom) + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 12px; pointer-events: none; }
+.floating-actions .button { pointer-events: auto; min-height: var(--floating-button-height); padding: 14px 22px; gap: 16px; border-radius: 999px; white-space: nowrap; box-shadow: 0 0 0 3px rgba(255,255,255,.8), 0 6px 24px rgba(23,43,77,.22); }
+.floating-consultation { background: var(--consultation); border-color: var(--consultation-border); color: var(--ink); }
 .floating-consultation:hover { background: var(--consultation-hover); }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 .skip-link { position: fixed; left: 16px; top: -100px; z-index: 100; padding: 14px 20px; background: var(--accent); color: var(--brand); }
@@ -74,7 +76,7 @@ a:hover .text-link .arrow-icon, .text-link:hover .arrow-icon, .button:hover .arr
 .site-header { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.97); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
 .header-inner { height: var(--header-height); display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .brand-link, .footer-logo { flex-shrink: 0; display: inline-flex; align-items: center; gap: 12px; }
-.brand-mark { width: 84px; height: auto; }
+.brand-mark { width: 6rem; height: auto; translate: 0 .1rem; }
 .brand-copy { display: flex; flex-direction: column; align-items: flex-start; }
 .brand-title { font-size: var(--text-body); font-weight: 700; line-height: 1.4; }
 .brand-description { font-size: var(--text-ui); font-weight: 550; line-height: 1.4; white-space: nowrap; }
@@ -403,7 +405,8 @@ tbody td { color: var(--muted); }
   .section-pad { padding-block: 64px; }
   .header-inner { height: var(--header-height); gap: 12px; }
   .menu-toggle { margin-left: auto; width: 44px; height: 48px; }
-  .floating-consultation { left: 20px; right: 20px; }
+  .floating-actions { left: 20px; right: 20px; }
+  .floating-actions .button { padding: 12px 10px; gap: 8px; }
   .hero-grid { grid-template-columns: 1fr; padding-block: 46px 32px; gap: 36px; }
   .hero h1 { font-size: clamp(34px, 7.3vw, 48px); letter-spacing: -1.6px; }
   .hero-eyebrow { font-size: var(--text-small); letter-spacing: 1.3px; margin-bottom: 23px; }
@@ -500,9 +503,8 @@ tbody td { color: var(--muted); }
   .article-page .article-list { grid-template-columns: 1fr; }
 }
 @media (max-width: 370px) {
-  .header-inner { width: calc(100% - 28px); gap: 8px; }
-  .brand-link { gap: 8px; }
-  .brand-link .brand-mark { width: 72px; }
+  .header-inner { width: calc(100% - 12px); gap: 4px; }
+  .brand-link { gap: 4px; }
   .hero h1 { font-size: 31px; }
   .hero-assurance { gap: 12px; }
   .integration-visual { padding: 17px; }
@@ -518,7 +520,7 @@ tbody td { color: var(--muted); }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 @media print {
-  .site-header, .site-footer, .detail-toc, .related-section, .detail-cta, .contact-section, .hero-actions, .floating-consultation { display: none; }
+  .site-header, .site-footer, .detail-toc, .related-section, .detail-cta, .contact-section, .hero-actions, .floating-actions { display: none; }
   .container { width: 100%; }
   .detail-layout { display: block; }
   .section-pad { padding-block: 25px; }

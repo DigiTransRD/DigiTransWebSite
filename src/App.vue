@@ -9,6 +9,9 @@ import AppFooter from './components/AppFooter.vue'
     <AppHeader />
     <main id="main-content" tabindex="-1"><RouterView /></main>
     <AppFooter />
-    <RouterLink to="/contact/" class="button floating-consultation">預約導入評估 <ArrowIcon /></RouterLink>
+    <nav class="floating-actions" aria-label="導入與評估">
+      <RouterLink to="/#solutions" class="button floating-solutions">導入方案 <ArrowIcon direction="down" tone="light" /></RouterLink>
+      <RouterLink to="/contact/" class="button floating-consultation">預約評估 <ArrowIcon /></RouterLink>
+    </nav>
   </div>
 </template>
