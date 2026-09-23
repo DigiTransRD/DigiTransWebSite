@@ -92,7 +92,12 @@ a:hover .text-link .arrow-icon, .text-link:hover .arrow-icon, .button:hover .arr
 .hero-eyebrow { display: flex; align-items: center; gap: 9px; margin-bottom: 26px; }
 .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #205bc3; flex-shrink: 0; }
 .hero h1 { font-size: clamp(40px, 4.1vw, 59px); line-height: 1.35; letter-spacing: -3px; font-weight: 650; }
-.hero h1 em { color: #205bc3; }
+.hero h1 em { color: #205bc3; font-style: normal; }
+.hero-title-line { display: block; }
+.hero-title-line-transform { margin-left: clamp(40px, 6.5vw, 96px); }
+.hero-title-line-ai { margin-left: clamp(18px, 3vw, 48px); }
+.hero-title-line-transform em { font-size: 1.28em; }
+.hero-title-line-ai em { font-size: 1.18em; }
 .hero-description { font-size: var(--text-body); color: var(--muted); margin-top: 28px; line-height: 1.9; }
 .hero-description span { color: var(--ink); font-weight: 600; }
 .hero-description .hero-name { display: block; margin-bottom: 6px; }

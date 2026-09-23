@@ -15,7 +15,11 @@ const readingPaths = [
     <div class="container hero-grid">
       <div class="hero-copy">
         <p class="eyebrow hero-eyebrow"><span class="status-dot" aria-hidden="true"></span> ABI ASSISTANT / BUSINESS AI AGENT</p>
-        <h1><em>升級</em>您的舊系統<br /><em>快速轉型</em><br /><em>AI驅動</em>的強大系統</h1>
+        <h1>
+          <span class="hero-title-line hero-title-line-upgrade"><em>升級</em>您的舊系統</span>
+          <span class="hero-title-line hero-title-line-transform"><em>快速轉型</em></span>
+          <span class="hero-title-line hero-title-line-ai"><em>AI驅動</em>的強大系統</span>
+        </h1>
         <p class="hero-description"><span class="hero-name">ABI（{{ productIdentity.fullName }}）</span>輕量級{{ productIdentity.chineseName }}，<br />專為零售、流通、餐飲與旅宿中小店家打造。<br />生成<span>表單、報表、APP，通用功能立即上線。</span><br /><span>不必自建 AI 團隊，也能啟動 AI 轉型。</span></p>
         <div class="hero-actions"><RouterLink to="/#applications" class="button button-ghost">看三種商業應用 <ArrowIcon direction="down" /></RouterLink></div>
         <div class="hero-assurance"><span>沿用既有系統</span><span>企業資料治理</span><span>工程師駐點協作</span></div>
