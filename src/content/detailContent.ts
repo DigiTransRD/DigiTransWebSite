@@ -62,6 +62,7 @@ export const detailPages: DetailPage[] = [
   },
   {
     path: '/capabilities/generative-app/', category: 'GENERATIVE APPS / 03', title: '生成式 APP：讓資料庫，長出商業應用。',
+    hideTableOfContents: true,
     description: 'ABI 從資料庫 Schema、功能 Mapping 與關聯規則生成商業 APP，結合標準 Runtime、權限、主從明細與受控發布。',
     lead: '把資料結構、業務關聯與操作規則，轉成可持續演進的管理介面。',
     facts: [{ label: '起點', value: 'Schema 與業務關聯' }, { label: '治理基準', value: '經確認的功能 Mapping' }, { label: '執行方式', value: '標準 Runtime 與受控 API' }],
