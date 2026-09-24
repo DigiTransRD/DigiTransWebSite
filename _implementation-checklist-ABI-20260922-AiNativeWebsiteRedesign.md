@@ -5,17 +5,38 @@
 - 任務範圍：D:\BiShop\AiAgentGitHub\DigiTransWebSite；ABI 原始碼與規格僅供查證。
 - 負責 Agent：ABI，PM 授權直接實作，不另派工。
 - PM 決策摘要：可自由調整色系、結構、選單、文案、圖表；強化三種生成式商業應用、既有系統整合、技術治理及前進部署工程師服務；完成後本機審查，不發布。
-- 目前狀態：DONE；「預約評估」懸浮按鈕已改為直接定位表單卡片，建置與行動／桌機定位驗證通過，待 PM 發布後審閱。
+- 目前狀態：DONE；依 PM 2026-09-24 指示統一 ABI 英文全名與 Agentic 說明，圖片圖說及 GEO 內容已同步，正式建置與桌機／手機驗證通過；尚未發布。
 - 對應 request/reply board：無，本輪非並行工作。
 
 ## 方案與邊界
 
 沿用 Vue 3、Vue Router、Vite 及現有洽詢 API，不新增套件。首頁提供十秒價值辨識，能力、整合、架構、治理、導入與評估指標各有完整深入頁。以原生語意 HTML、可探索連結、同一 Vue 元件的建置期預先渲染與結構化資料支援搜尋。保留既有 hash 網址進入與文章內容。ABI 為持續開發中的新系統，文案不虛構實測數據、認證或客戶背書；專屬技能與功能擴充明確歸屬導入服務。
 
+## 2026-09-24 ABI 名詞與搜尋內容修正
+
+本輪依 PM 明確指定，將 ABI 全名統一為 Agentic Business Intelligence，修正相關解釋、圖說及生成式 AI 搜尋內容；既有紀錄中的全名同步採用此名稱。沿用現有內容來源與建置流程，僅修改網站文案及直接引用。
+
+- [x] 確認實際根目錄，搜尋含隱藏檔與建置輸出的文字，檢查產品定義、文章、語系、SVG、圖片及引用。
+- [x] 檢視 37 張點陣圖（含舊素材與驗證截圖）；未發現舊英文全名，既有 SVG 品牌圖僅含 ABI 縮寫。
+- [x] 更新共用產品定義、中英文總覽、Agentic 架構解釋、整合圖與架構圖圖說。
+- [x] 同步首頁素材、公司／架構素材、README、品牌及 GEO 說明，保留同源產出的 JSON-LD、Markdown 與 llms.txt。
+- [x] 依本輪需求核對驗證前提後，執行正式建置、全站成品搜尋及搜尋內容一致性檢查。
+- [x] 驗證桌機／手機呈現、頁面切換後 metadata 與檔案編碼，回寫實際結果。
+
+本輪驗證：
+
+- 使用前先核對既有共用定義、路由、FAQ 與建置資料來源，以 PM 指定的新全名、Agentic 解釋及既有權限邊界為驗證依據。
+- `npm run build` 通過 TypeScript、Vite client／SSR 與預先渲染，產出 21 個 HTML（含 404）、10 份 Markdown、sitemap.xml、robots.txt 與 llms.txt。
+- 搜尋 147 個專案檔案（包含隱藏檔、素材及 dist／dist-ssr，排除 Git 歷史與第三方 node_modules），舊全名及其英文首字皆零命中；37 張點陣圖另以視覺檢查，SVG 與圖片引用一併核對。
+- 21 頁 SoftwareApplication 的 alternateName／description 一致；首頁 8 則 FAQ 的正文與 JSON-LD 相符。首頁搜尋及社群摘要、產品中英文 HTML／Markdown、架構 Markdown 與 llms.txt 均使用新定義。
+- 正式成品於 320／390／768／1440px 檢查首頁、產品總覽、架構及整合頁，共 16 次，均無整頁水平溢出或圖說裁切；桌機／手機截圖已檢視。四頁停用 JavaScript 仍可讀取新全名及說明。
+- 客戶端切換至產品／架構頁後，metadata、Markdown alternate 與圖說正確；瀏覽器 Console 為 0 errors、0 warnings。
+- 11 個修改檔案通過 UTF-8 無 BOM、CRLF、無 NUL 字元及 `git diff --check`；本輪限於文案與直接引用，未修改 API、套件依賴或發布流程。
+
 ## 實作檢核
 
 - [x] 加入零售、流通、餐飲、旅宿中小店家的輕量導入定位與「不必自建 AI 團隊」價值；呈現報表用問、表單用說、管理系統生成的應用方式，將「資料留店內」明確限定為可留在店內的營運資料庫。
-- [x] 首頁摘要補充 ABI（Artificial Business Intelligence），同步既有 FAQ、產品定義及搜尋資料；選用提供的箭頭 PNG，統一選單、按鈕、卡片與連結圖示。依 PM 後續意見，以原圖透明輪廓及 CSS currentColor 套色取代純黑，驗證方向、明暗、手機版面與原有入口。
+- [x] 首頁摘要補充 ABI（Agentic Business Intelligence），同步既有 FAQ、產品定義及搜尋資料；選用提供的箭頭 PNG，統一選單、按鈕、卡片與連結圖示。依 PM 後續意見，以原圖透明輪廓及 CSS currentColor 套色取代純黑，驗證方向、明暗、手機版面與原有入口。
 
 - [x] 確認實際網站根目錄、既有框架、路由、文章與洽詢 API 契約。
 - [x] 查閱 ABI Overview、AbiGenApp Overview、AbiXpand Overview 與對應實作。
@@ -62,7 +83,7 @@
 
 - 箭頭套色追加驗證：TypeScript／Vite／SSR／21 頁建置通過。沿用原 PNG 透明輪廓，CSS currentColor 正確呈現選單 #52627a、品牌連結 #205bc3、金色按鈕 #172b4d 與深色按鈕白色。正式成品以 320／600／1440px 驗證首頁、產品總覽、文章列表與 404 共 12 次，無純黑箭頭、缺少遮罩、水平溢出或可及性標記遺失。已視覺檢視手機選單與金色按鈕，導覽及預約入口通過，Console 無 errors／warnings。修改限共用圖示、選單箭頭色彩及既有紀錄，未新增依賴或發布。
 
-- ABI 全名與圖示追加驗證：正式 TypeScript／Vite／SSR／21 頁建置通過；首頁摘要、可見 FAQ、產品 HTML／Markdown、SoftwareApplication alternateName 及 llms.txt 均包含 Artificial Business Intelligence，並明確說明 ABI 縮寫。
+- ABI 全名與圖示追加驗證：正式 TypeScript／Vite／SSR／21 頁建置通過；首頁摘要、可見 FAQ、產品 HTML／Markdown、SoftwareApplication alternateName 及 llms.txt 均包含 Agentic Business Intelligence，並明確說明 ABI 縮寫。
 - 使用 PM 提供的 Live_1230.png 黑色與 Live_1230_1.png 白色原圖。21 頁於 320／1440px 共 42 次檢查，286 個箭頭實例載入正常、具裝飾性可及性標記，無水平溢出，正文保持 20px，頁腳末行留白至少 23.67px。首頁另於 390／600／768／1151px 檢查通過；320px 首頁、600px 手機選單及桌機已視覺檢視。
 - 手機 8 個選單箭頭對齊、功能連結與收合、金色預約按鈕、文章返回及首頁向下跳轉均通過；箭頭方向正確且 Console 無 errors／warnings。沒有新增依賴、派工、發布或送出洽詢資料，原始圖示檔案未修改。
 

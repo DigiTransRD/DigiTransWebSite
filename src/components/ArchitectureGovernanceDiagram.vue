@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { productIdentity } from '../content/homeContent'
+</script>
+
 <template>
   <figure class="architecture-diagram" aria-labelledby="architecture-diagram-title" aria-describedby="architecture-diagram-caption">
     <header class="architecture-diagram-heading">
@@ -44,7 +48,7 @@
       </section>
     </div>
 
-    <figcaption id="architecture-diagram-caption">雲地協作概念圖，實際路徑依功能與部署設定。模型可配置於本地或雲端；使用雲端模型時，須確認上下文的傳送範圍。</figcaption>
+    <figcaption id="architecture-diagram-caption">ABI（{{ productIdentity.fullName }}）雲地協作概念圖：AI 代理結合技能與工具，受控服務執行授權操作。實際路徑依功能與部署設定。模型可配置於本地或雲端；使用雲端模型時，須確認上下文的傳送範圍。</figcaption>
   </figure>
 </template>
 

@@ -1,6 +1,6 @@
 import solutionsMarkdown from '../assets/context/solutions.md?raw'
 
-const abiFullName = 'Artificial Business Intelligence'
+const abiFullName = 'Agentic Business Intelligence'
 
 export const productIdentity = {
   name: 'ABI Assistant',
@@ -9,7 +9,7 @@ export const productIdentity = {
   alternateName: '商用人工智慧助理',
   category: 'Business AI Agent',
   path: '/abi-assistant/',
-  definition: `ABI 是 ${abiFullName} 的縮寫。ABI Assistant 是資傳數位開發的商用人工智能助理，亦稱商用人工智慧助理，定位為連接企業資料、工具與流程的 Business AI Agent。透過生成式表單、生成式報表與生成式 APP，將自然語言需求轉為可使用的商業應用。`,
+  definition: `ABI 是 ${abiFullName} 的縮寫。Agentic 強調 AI 代理結合企業資料、專屬技能與授權工具，依業務流程執行任務。ABI Assistant 是資傳數位開發的商用人工智能助理，亦稱商用人工智慧助理，定位為 Business AI Agent。透過生成式表單、生成式報表與生成式 APP，將自然語言需求轉為可使用的商業應用；實際操作受權限、資料範圍與業務規則約束。`,
 }
 
 export const quickStartSteps = [

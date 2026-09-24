@@ -25,12 +25,12 @@ export const detailPages: DetailPage[] = [
     lead: '從理解需求到完成工作，讓既有系統成為企業 AI 的行動基礎。',
     facts: [{ label: '產品名稱', value: productIdentity.name }, { label: '產品定位', value: productIdentity.category }, { label: '開發與導入', value: '資傳數位有限公司' }],
     sections: [
-      { id: 'definition', title: 'ABI Assistant 是什麼？', body: 'ABI Assistant 將模型、企業知識、業態技能與可執行工具組織成商業應用平台。使用者描述工作需求，ABI 在設定的資料範圍與工具權限內生成成果，再透過受控服務完成資料存取與實際操作。', points: ['商用人工智能助理與商用人工智慧助理，是本網站對 ABI Assistant 的中文產品描述。', 'Business AI Agent 是 ABI Assistant 的產品定位，強調連接企業資料與執行業務工作的能力。', '適用對象包含經營者、企業高管、CTO、資訊團隊與第一線業務人員。'] },
+      { id: 'definition', title: 'ABI Assistant 是什麼？', body: 'ABI Assistant 將模型、企業知識、業態技能與可執行工具組織成商業應用平台。Agentic 代表以 AI 代理理解工作需求，結合適用技能與授權工具，依企業流程生成成果並執行任務。資料存取與實際操作由受控服務處理，遵守設定的資料範圍、工具權限與業務規則。', points: ['商用人工智能助理與商用人工智慧助理，是本網站對 ABI Assistant 的中文產品描述。', 'Business AI Agent 是 ABI Assistant 的產品定位，強調連接企業資料與執行業務工作的能力。', '適用對象包含經營者、企業高管、CTO、資訊團隊與第一線業務人員。'] },
       { id: 'applications', title: '三種生成式商業應用，現在就能開始。', body: '完成安裝、模型、資料來源與權限設定後，三種通用功能即可使用。日常生成無須逐份撰寫程式，企業專屬流程與特殊介面再由工程師擴充。', points: ['生成式表單：描述欄位與收集規則，確認後發布，用於巡檢、需求回報及資料登記。', '生成式報表：以營運問題查詢授權資料，生成摘要、圖表及明細，支援經營分析與例行彙整。', '生成式 APP：從資料庫結構與業務關聯出發，生成具備查詢、資料維護及權限規則的管理介面。'] },
       { id: 'integration', title: '既有 ERP、POS、CRM，如何接上 AI？', body: '從可用資料庫、API 與企業知識開始介接，保留原系統已建立的資料與業務規則。資料查詢、單據寫回或跨系統操作，依原廠介面、授權及交易要求逐項確認；工程師補齊資料對應與必要的擴充工具。', points: ['快速建置：以現有資料與通用生成能力切入高價值場景。', 'LINE 生態整合：依情境配置對話、LIFF、表單、報表及身分綁定入口。', '業態專屬技能：讓 AI 使用企業的術語、資料字典與作業知識。', '企業流程框架：明確定義工作步驟、輸出規格與檢核規則。'] },
       { id: 'governance', title: '企業如何掌握資料與操作權限？', body: 'ABI 以雲地協作、明確的資料結構及受控執行服務分工。AI 生成成果與後端執行權限分開，資料存取須遵守身分、功能與目標資料庫的規則。採用雲端模型時，必要上下文可能送往模型服務；導入時確認可傳送欄位、保存範圍與稽核需求。' },
       { id: 'deployment', title: '如何導入，如何持續擴充？', body: '提供租賃、使用權買斷與客製整合三種導入方案。前進部署工程師（Forward Deployed Engineer，FDE）協助現場盤點、資料介接、專屬技能、流程框架及擴充開發。以實際工作時間、資料正確性與完整流程驗收，再擴展到下一個應用。' },
-      { id: 'english-overview', title: 'ABI Assistant — Business AI Agent', body: 'ABI Assistant is a Business AI Agent developed by Digital Transformation Consulting Ltd. It connects enterprise data, authorized tools and workflows to generate business forms, reports and applications. Forward Deployed Engineers support system integration, industry-specific skills, workflow configuration and custom extensions.' },
+      { id: 'english-overview', title: 'ABI Assistant — Business AI Agent', body: `ABI stands for ${productIdentity.fullName}. ABI Assistant is a Business AI Agent developed by Digital Transformation Consulting Ltd. Agentic means using AI agents with enterprise data, industry-specific skills and authorized tools to carry out tasks within defined business workflows. It generates business forms, reports and applications; operations remain subject to permissions, data access scope and business rules. Forward Deployed Engineers support system integration, skill configuration, workflows and custom extensions.` },
     ], related: ['/capabilities/generative-forms/', '/capabilities/generative-reports/', '/capabilities/generative-app/'],
   },
   {
@@ -92,7 +92,7 @@ export const detailPages: DetailPage[] = [
     lead: '讓模型理解需求，也讓每一個執行動作有資料契約、權限與責任歸屬。',
     facts: [{ label: '設計基準', value: 'Schema → Mapping → Runtime' }, { label: '資料存取', value: 'AbiXpand 共用基礎層' }, { label: '部署模式', value: '雲地協作' }],
     sections: [
-      { id: 'native', title: 'AI 原生：需求、資料語意與工具共同運作。', body: 'ABI 將自然語言需求連接到企業資料定義、專屬技能與可執行工具，再產生表單、報表或 APP。模型負責理解與生成，受控服務負責授權、資料存取與實際執行。' },
+      { id: 'native', title: 'Agentic：讓需求、資料語意與授權工具共同運作。', body: `ABI（${productIdentity.fullName}）以 AI 代理連接自然語言需求、企業資料定義、專屬技能與授權工具，依流程框架產生表單、報表或 APP，並透過受控服務執行工作。模型負責理解與生成，服務端負責授權、資料存取及實際執行；可執行範圍由已配置的工具、權限與業務規則決定。` },
       { id: 'skills', title: '業態專屬技能：把行業知識，轉成 AI 的工作能力。', body: '技能定義特定工作需要的知識、指引與工具使用方式。前進部署工程師可依零售、餐飲、服飾、寵物或生鮮等業態，整理專屬術語、營運指標與作業方法，再依助理角色及任務配置技能包。', points: ['業態知識：整理商品分類、資料字典、計算口徑與常見業務情境。', '角色任務：依門市、營運、管理等角色，設計工作指引與可用工具。', '持續優化：透過實際案例驗證技能內容，再隨企業流程調整與維護。'] },
       { id: 'frameworks', title: '企業流程框架：讓 AI 遵循企業的工作方法。', body: 'AI 執行框架（Harness）將任務步驟、輸出結構、檢核規則與協同技能組織成可管理的生成依據。工程師可將企業作業標準與專屬格式納入框架，讓表單、報表與 APP 的生成更貼近企業要求。', points: ['技能回答「這項工作怎麼做」，框架定義「依什麼步驟、交付什麼成果」。', '依任務綁定適用技能包，使用經驗證、發布且啟用的框架與技能內容。', '以資料契約、格式與驗證規則檢查生成成果；實際資料操作仍由服務端權限與工具規則控制。', '需要簽核、狀態轉換或跨系統操作時，由工程師配置對應流程與介面，逐項驗收。'] },
       { id: 'layers', title: '使用者入口、雲端協作、地端執行分工清楚。', body: '使用者透過瀏覽器或 LINE 進入適用功能。AbiAssistant 負責地端資料連線、生成設計與工具執行；AbiAsstAPI 承擔雲地訊息與部署協作；AbiGenApp 承載 APP 登入、介面與固定 Runtime API。', points: ['APP Runtime 不直接連線企業目標業務資料庫。', '模型可依任務與環境配置本地或雲端服務；可用性取決於模型能力、硬體及設定。', '雲端同步資料、上下文與必要通訊分別定義，不能以「資料全不出地端」概括。'] },

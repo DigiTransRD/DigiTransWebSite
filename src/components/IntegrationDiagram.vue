@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ArrowIcon from './ArrowIcon.vue'
+import { productIdentity } from '../content/homeContent'
 </script>
 <template>
   <figure class="integration-visual" aria-labelledby="integration-caption">
@@ -18,6 +19,6 @@ import ArrowIcon from './ArrowIcon.vue'
       <div><span class="node-symbol" aria-hidden="true">02</span><strong>生成式報表</strong><small>支持決策</small></div>
       <div><span class="node-symbol" aria-hidden="true">03</span><strong>生成式 APP</strong><small>執行業務</small></div>
     </div>
-    <figcaption id="integration-caption"><span class="status-dot" aria-hidden="true"></span>整合概念圖 · 依企業流程配置與導入</figcaption>
+    <figcaption id="integration-caption"><span class="status-dot" aria-hidden="true"></span><span>ABI（{{ productIdentity.fullName }}）整合概念圖 · 結合企業資料、技能與授權工具，依流程執行任務。</span></figcaption>
   </figure>
 </template>

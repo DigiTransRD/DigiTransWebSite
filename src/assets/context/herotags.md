@@ -1,5 +1,6 @@
 <!-- 英雄頁副標題 -->
-subtitle:**ABI (Artificial Business Intelligence) Assistant 商用人工智慧助理**
+subtitle:**ABI (Agentic Business Intelligence) Assistant 商用人工智慧助理**
+Agentic 強調 AI 代理結合企業資料、專屬技能與授權工具，依業務流程執行任務。
 資料留在店內、操作就在 LINE。報表用問的、表單用說的、管理系統用生成的——
 專為零售、流通、餐飲、旅宿中小店家打造的輕量級 AI 系統，不必養 IT 團隊，也能完成 AI 轉型。
 

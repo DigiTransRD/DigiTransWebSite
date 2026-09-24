@@ -6,7 +6,7 @@ export const site = {
   name: productIdentity.name,
   company: '資傳數位有限公司',
   url: 'https://www.digitrans.com.tw',
-  description: 'ABI Assistant 商用人工智能助理（商用人工智慧助理），連接企業資料與流程的 Business AI Agent。生成式表單、報表與 APP 通用功能立即可用，結合 LINE、業態技能及前進部署工程師，讓既有系統成為 AI 原生系統。',
+  description: `ABI 是 ${productIdentity.fullName} 的縮寫。ABI Assistant 商用人工智能助理（商用人工智慧助理），以 Business AI Agent 結合企業資料、技能與授權工具執行任務。生成式表單、報表與 APP 通用功能立即可用，支援 LINE 整合與前進部署工程師導入。`,
 }
 export const staticPaths = ['/', ...detailPages.map(page => page.path), '/contact/', '/articles/skills/', '/articles/trends/', ...getAllArticles().map(article => '/article/' + article.slug + '/')]
 

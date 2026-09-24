@@ -16,5 +16,5 @@
 - 動態：160–240ms 的 hover / focus 轉場，支援 reduced motion。
 - 資訊層次：首頁商業價值、各能力頁評估資訊、技術頁可驗證的責任邊界。
 - 內容依據：ABI 現行規格及產品原始碼；搜尋處理參考 Google Search Central 的 AI features 與 structured data 文件。
-- 產品名稱：ABI Assistant；ABI 為 Artificial Business Intelligence 的縮寫。中文描述為「商用人工智能助理」及「商用人工智慧助理」；產品定位為 Business AI Agent。首頁、FAQ、產品總覽及結構化資料明確連結名稱與資傳數位，不重複堆砌關鍵字。
-- 搜尋內容：沿用同一內容來源產出靜態 HTML、詳細頁 Markdown、JSON-LD、sitemap 與 llms.txt。llms.txt 為補充閱讀索引，不代表任何搜尋引擎的收錄或排名保證。
+- 產品名稱：ABI Assistant；ABI 為 Agentic Business Intelligence 的縮寫。Agentic 強調 AI 代理結合企業資料、專屬技能與授權工具，依業務流程執行任務；實際操作受權限、資料範圍與業務規則約束。中文描述為「商用人工智能助理」及「商用人工智慧助理」；產品定位為 Business AI Agent。首頁、FAQ、中英文產品總覽、架構解釋、圖說及結構化資料使用一致定義，明確連結名稱與資傳數位，不重複堆砌關鍵字。
+- 搜尋內容：沿用同一內容來源產出靜態 HTML、詳細頁 Markdown、JSON-LD、sitemap 與 llms.txt。ABI 全名與定義以 `src/content/homeContent.ts` 的 `productIdentity` 為準，首頁摘要、FAQ、SoftwareApplication alternateName／description、產品 Markdown 與 llms.txt 同步更新；`siteMetadata.ts` 提供搜尋摘要及 Open Graph／Twitter 說明。Agentic 解釋須與可見頁面及系統權限邊界一致。llms.txt 為補充閱讀索引，不代表任何搜尋引擎的收錄或排名保證。

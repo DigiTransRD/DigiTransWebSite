@@ -2,6 +2,10 @@
 
 Static GitHub Pages version of the ABI Assistant website.
 
+ABI stands for **Agentic Business Intelligence**. ABI Assistant uses AI agents with enterprise data, industry-specific skills and authorized tools to generate business forms, reports and applications and carry out tasks within defined workflows, permissions and business rules.
+
+The shared product definition in `src/content/homeContent.ts` feeds the website, FAQ, JSON-LD, product Markdown and `llms.txt`. Page descriptions also feed search and social metadata. Keep the full name and Agentic explanation consistent across these outputs when updating content.
+
 ## Local development
 
 ```bash
