@@ -4,6 +4,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { getDetailPage } from '../content/detailContent'
 import IntegrationDiagram from '../components/IntegrationDiagram.vue'
+import ArchitectureGovernanceDiagram from '../components/ArchitectureGovernanceDiagram.vue'
 const route = useRoute()
 const page = computed(() => getDetailPage(route.path))
 const related = computed(() => page.value?.related.map(getDetailPage).filter(item => !!item) ?? [])
@@ -15,7 +16,8 @@ const related = computed(() => page.value?.related.map(getDetailPage).filter(ite
       <aside v-if="!page.hideTableOfContents" class="detail-toc"><p class="eyebrow">本頁內容</p><nav aria-label="本頁目錄"><RouterLink v-for="(section, index) in page.sections" :key="section.id" :to="page.path + '#' + section.id"><span>0{{ index + 1 }}</span>{{ section.title }}</RouterLink><RouterLink v-if="page.table" :to="page.path + '#assessment'">評估參考</RouterLink></nav><RouterLink class="button button-small" to="/contact/">討論你的需求 <ArrowIcon tone="light" /></RouterLink></aside>
       <div class="detail-body">
         <p class="detail-summary">{{ page.description }}</p>
-        <IntegrationDiagram v-if="page.path === '/architecture/' || page.path === '/integrations/'" />
+        <ArchitectureGovernanceDiagram v-if="page.path === '/architecture/'" />
+        <IntegrationDiagram v-else-if="page.path === '/integrations/'" />
         <section v-for="section in page.sections" :id="section.id" :key="section.id" class="detail-section"><h2>{{ section.title }}</h2><p>{{ section.body }}</p><ul v-if="section.points"><li v-for="point in section.points" :key="point">{{ point }}</li></ul></section>
         <section v-if="page.table" id="assessment" class="detail-section"><h2>{{ page.table.title }}</h2><div class="table-scroll" tabindex="0" :aria-label="page.table.title"><table><thead><tr><th v-for="heading in page.table.headers" :key="heading" scope="col">{{ heading }}</th></tr></thead><tbody><tr v-for="(row, index) in page.table.rows" :key="index"><th scope="row">{{ row[0] }}</th><td v-for="(cell, cellIndex) in row.slice(1)" :key="cellIndex">{{ cell }}</td></tr></tbody></table></div></section>
         <div class="editor-note"><span class="eyebrow">ABI / 持續演進</span><p>本文由資傳數位整理。產品持續優化，實際導入以確認的資料、權限、版本及驗收範圍為準。</p></div>
