@@ -15,6 +15,7 @@ export interface DetailPage {
   facts: { label: string; value: string }[]
   sections: DetailSection[]
   table?: { title: string; headers: string[]; rows: string[][] }
+  hideTableOfContents?: boolean
   related: string[]
 }
 
@@ -74,6 +75,7 @@ export const detailPages: DetailPage[] = [
   },
   {
     path: '/integrations/', category: 'INTEGRATION', title: '保留核心系統，打開 AI 的工作入口。',
+    hideTableOfContents: true,
     description: 'ABI 透過資料庫、API 與工具介面連接既有 ERP、POS、CRM，結合 LINE 對話、LIFF 與身分綁定，讓生成式應用接上企業資料與熟悉的工作入口。',
     lead: '企業累積的資料與流程，就是 AI 轉型最有價值的起點。',
     facts: [{ label: '資料層', value: 'SQL Server / MySQL / SQLite' }, { label: '工具層', value: 'API / MCP / 專屬技能' }, { label: '原則', value: '先確認介面，再開放操作' }],
@@ -102,6 +104,7 @@ export const detailPages: DetailPage[] = [
   },
   {
     path: '/governance/', category: 'SECURITY & GOVERNANCE', title: '讓 AI 能做事，也讓企業掌握邊界。',
+    hideTableOfContents: true,
     description: 'ABI 從身分、操作權限、資料範圍、生成成果與發布版本定義 AI 治理，並在導入時驗證每條實際使用路徑。',
     lead: '治理是誰能用、能做什麼、資料去哪裡，以及失敗時如何處理。',
     facts: [{ label: '存取', value: '身分與操作權限' }, { label: '成果', value: '可追查的發布來源' }, { label: '導入', value: '逐路徑驗證與驗收' }],
@@ -116,6 +119,7 @@ export const detailPages: DetailPage[] = [
   },
   {
     path: '/deployment/', category: 'FORWARD DEPLOYED ENGINEERING', title: '與你的團隊一起，把 AI 做進現場。',
+    hideTableOfContents: true,
     description: 'ABI 由前進部署工程師協助駐點導入、資料整合、專屬技能與框架客製，必要時快速開發擴充功能，並以實際業務流程驗收。',
     lead: '通用功能立即啟用，專屬需求由工程師深入協作。依你的部署與整合需求，選擇租賃、使用權買斷或客製整合。',
     facts: [{ label: '協作方式', value: 'FDE 駐點與團隊共創' }, { label: '客製內容', value: '技能、工具、框架、擴充' }, { label: '交付標準', value: '真實業務流程驗收' }],

@@ -11,8 +11,8 @@ const related = computed(() => page.value?.related.map(getDetailPage).filter(ite
 <template>
   <article v-if="page" class="detail-page">
     <header class="detail-hero container"><nav class="breadcrumbs" aria-label="麵包屑"><RouterLink to="/">首頁</RouterLink><span aria-hidden="true">/</span><span>{{ page.category.split(' / ')[0] }}</span></nav><p class="eyebrow">{{ page.category }}</p><h1>{{ page.title }}</h1><p class="detail-lead">{{ page.lead }}</p><div class="detail-facts"><div v-for="fact in page.facts" :key="fact.label"><span>{{ fact.label }}</span><strong>{{ fact.value }}</strong></div></div></header>
-    <div class="container detail-layout">
-      <aside class="detail-toc"><p class="eyebrow">本頁內容</p><nav aria-label="本頁目錄"><RouterLink v-for="(section, index) in page.sections" :key="section.id" :to="page.path + '#' + section.id"><span>0{{ index + 1 }}</span>{{ section.title }}</RouterLink><RouterLink v-if="page.table" :to="page.path + '#assessment'">評估參考</RouterLink></nav><RouterLink class="button button-small" to="/contact/">討論你的需求 <ArrowIcon tone="light" /></RouterLink></aside>
+    <div class="container detail-layout" :class="{ 'detail-layout--without-toc': page.hideTableOfContents }">
+      <aside v-if="!page.hideTableOfContents" class="detail-toc"><p class="eyebrow">本頁內容</p><nav aria-label="本頁目錄"><RouterLink v-for="(section, index) in page.sections" :key="section.id" :to="page.path + '#' + section.id"><span>0{{ index + 1 }}</span>{{ section.title }}</RouterLink><RouterLink v-if="page.table" :to="page.path + '#assessment'">評估參考</RouterLink></nav><RouterLink class="button button-small" to="/contact/">討論你的需求 <ArrowIcon tone="light" /></RouterLink></aside>
       <div class="detail-body">
         <p class="detail-summary">{{ page.description }}</p>
         <IntegrationDiagram v-if="page.path === '/architecture/' || page.path === '/integrations/'" />

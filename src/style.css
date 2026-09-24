@@ -287,6 +287,7 @@ a:hover .text-link .arrow-icon, .text-link:hover .arrow-icon, .button:hover .arr
 .detail-facts span { display: block; font-size: var(--text-small); color: var(--muted); margin-bottom: 9px; }
 .detail-facts strong { font-size: var(--text-ui); font-weight: 550; }
 .detail-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 80px; align-items: start; padding-bottom: 75px; }
+.detail-layout--without-toc { grid-template-columns: minmax(0, 1fr); }
 .detail-toc { position: sticky; top: calc(var(--header-height) + 25px); padding-top: 13px; max-height: calc(100dvh - var(--header-height) - var(--floating-button-clearance) - 40px); overflow-y: auto; }
 .detail-toc > .eyebrow { color: var(--muted); }
 .detail-toc nav { display: flex; flex-direction: column; gap: 16px; margin-block: 25px 32px; }
