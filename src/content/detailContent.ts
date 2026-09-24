@@ -90,6 +90,7 @@ export const detailPages: DetailPage[] = [
   },
   {
     path: '/architecture/', category: 'ARCHITECTURE', title: 'AI 原生，從資料與執行架構開始。',
+    hideTableOfContents: true,
     description: '深入 ABI 業態專屬技能、企業流程框架 Harness、雲地協作、Schema、Mapping、Runtime 與 AbiXpand 資料存取設計，了解 AI 商業應用的架構責任。',
     lead: '讓模型理解需求，也讓每一個執行動作有資料契約、權限與責任歸屬。',
     facts: [{ label: '設計基準', value: 'Schema → Mapping → Runtime' }, { label: '資料存取', value: 'AbiXpand 共用基礎層' }, { label: '部署模式', value: '雲地協作' }],
