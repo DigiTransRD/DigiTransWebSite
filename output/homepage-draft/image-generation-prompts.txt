@@ -1,0 +1,66 @@
+# 圖片產製提示詞
+
+使用內建 ImageGen，兩張皆為全新概念圖片。
+
+## AI 營運主視覺
+
+檔案：`assets/ai-operations-hero.png`
+
+Use case: ads-marketing.
+Asset type: widescreen hero background for ABI Assistant, a Taiwanese business AI agent website. The image will sit behind real HTML headline on the left.
+Primary request: a sophisticated, cinematic image expressing an AI agent actively helping real commercial operations. No architecture diagram.
+Scene: a beautifully realistic modern neighborhood retail shop / cafe at twilight, an elegant wood service counter, subtle shelves and warm practical lights fading into a rich navy blue atmosphere. On the RIGHT HALF, a stunning translucent sculptural blue-white intelligence core, a fluid glass ribbon folded into a luminous three-dimensional loop, suspended above the service counter. A controlled trail of fine blue-white light moves through the space, suggesting work and intelligence. Nearby, three small elegant glass planes show purely abstract chart bars, form lines, and an app grid, without text or numbers. The planes are understated and part of the cinematic composition, not a sprawling dashboard or topology.
+Composition: ultra wide landscape 16:9. Entire left 45% must be mostly flat dark navy negative space with almost no objects and no bright light, for white headline overlay. Main sculpture on right 65% horizontal position, contained inside frame. Beautiful strong silhouette, tasteful depth, no excessive glowing clutter. Upper right detailed, bottom slight shadow.
+Style: premium photorealistic 3D campaign art, editorial high-end technology launch, convincing glass, brushed metal and warm wood; sophisticated and approachable for business owners. Cobalt #205bc3, navy #16345e, mist white; restrained small amber highlights.
+Constraints: NO letters, NO numbers, NO logos, NO typography, NO watermark, NO robots, NO human-shaped AI mascot, NO brain, NO complex architecture, NO connector arrows, NO neon purple or pink, NO fake brand marks. This is conceptual marketing art, not a screenshot. High resolution polished landscape.
+
+## 商業營運場景
+
+檔案：`assets/business-scenes.png`
+
+Use case: ads-marketing.
+Asset type: a photography strip for three business-application sections on a Taiwanese business AI agent landing page.
+Primary request: create ONE ultrawide landscape triptych with THREE EQUAL WIDTH photographic panels edge to edge, NO gaps, NO borders, NO text. Overall aspect ratio 3:1, each third is a square photograph. Each third independently composes its own subject centered with breathing room and aligned horizon height, suitable for CSS crops into three images.
+LEFT THIRD: candid modern Taiwanese retail shop, an East Asian woman store owner in her 40s calmly reviewing an open laptop beside stocked shelves, tasteful cobalt shirt, confident natural expression, work-focused, comfortable eye-level medium camera distance.
+MIDDLE THIRD: refined small Taiwanese cafe or restaurant, an East Asian supervisor in his 40s in a navy apron holds a digital tablet while collaborating with a colleague at a wooden service counter, natural warm ambient light, polished but believable, no exaggerated stock-photo smiles.
+RIGHT THIRD: stylish boutique hotel reception, an East Asian professional manager in her 40s, navy blazer, using a laptop at the light stone reception counter, warm architectural lighting, comfortable contemporary hotel background.
+Style: premium editorial business photography with consistent color grade, realistic people and hands, soft daylight, navy/cobalt accents, warm wood and mist white. Purpose is real operational contexts, not product screenshots. Screen displays only indistinct light surfaces, absolutely no legible interface, numbers or fictional results.
+Constraints: exact three equal-width self-contained panels in left/middle/right order; no fourth panel; no letters, numbers, labels, logos, watermarks; no sci-fi robots, holograms, architecture diagrams, neon pink or purple, or oversaturated effects. Crisp professional photography and strong natural composition.
+
+
+## Hero v2：三場景圖片圖層
+
+使用內建 ImageGen，全新生成；原版圖片保留。
+
+### 門市收銀
+
+檔案：`assets/hero-v2-store-checkout.png`
+
+Use case: ads-marketing.
+Asset type: one independent photographic layer for a premium ABI Assistant AI business-agent website hero collage.
+Scene: a real-looking modern Taiwanese neighborhood retail checkout. A professional East Asian female cashier in her thirties in a navy blue shirt is actively operating a POS touch terminal at a wood checkout counter. A customer's hand offers a payment card; cash drawer, barcode scanner and a few neatly arranged products make the checkout action immediately recognizable. Stocked retail shelves softly behind. No legible labels anywhere.
+Composition: landscape 4:3, medium-wide eye-level camera, cashier and POS both clearly visible in center-left; breathing room around people. The right and lower portions are simple counter and soft background, leaving space for a separate animated blue sales-chart overlay. Full bleed photograph, no frame or collage, no text.
+Style: cinematic high-end business campaign photography, credible natural faces and hands, refined navy and cobalt palette #16345e and #205bc3, warm wood details, blue evening ambient light, soft warm practical lights. Rich photographic depth with readable midtones, not crushed black.
+Constraints: no logo, letters, numerals, watermark, robot, hologram, baked-in chart, connector lines, architecture diagram or fake brand interface. This is an illustrative business scene, not an actual customer or product screenshot. High quality, photorealistic.
+
+### 總部辦公室
+
+檔案：`assets/hero-v2-headquarters-office.png`
+
+Use case: ads-marketing.
+Asset type: one independent photographic layer for a premium ABI Assistant AI business-agent website hero collage.
+Scene: a Taiwanese retail company's headquarters office at blue hour. Two experienced East Asian operations professionals, a man and a woman in their forties, work together at a clean desk reviewing business operations on a laptop and a large monitor. Large windows, a modern open office, distant colleagues and a blurred planning board establish a genuine headquarters setting. Screens display only indistinct neutral surfaces, no legible interface, text or data.
+Composition: landscape 4:3, medium-wide camera, people and desk centered, office depth and windows clearly recognizable, plenty of breathing room. Keep lower-right and upper-right less busy for a separate animated operations-chart overlay. Full bleed photograph, no frame or collage.
+Style: cinematic editorial business photography matching a navy/cobalt AI website. Navy #16345e and cobalt #205bc3, soft blue evening ambient light, subtle warm wood and warm practical accents. Sophisticated but real, natural working expressions and hands, readable subjects, no exaggerated stock smiles.
+Constraints: no logos, letters, numerals, watermark, robots, holograms, baked-in charts, network lines, complex diagram or fictional readable product interface. This is an illustrative office scene, not an actual customer or screenshot. High quality, photorealistic.
+
+### 機場行動管理
+
+檔案：`assets/hero-v2-airport-owner.png`
+
+Use case: ads-marketing.
+Asset type: one independent photographic layer for a premium ABI Assistant AI business-agent website hero collage.
+Scene: a Taiwanese business owner in his early fifties at an international airport lounge while traveling abroad, quietly reviewing his company's operating information on a tablet. East Asian man with refined natural features and dark navy business-casual blazer, seated beside a wide floor-to-ceiling window. A commercial airplane and airport gate infrastructure clearly visible outside, a discreet carry-on suitcase beside his seat, distant anonymous travelers. Tablet is held at a three-quarter angle and its screen has only subtle indistinct blue abstract chart shapes WITHOUT text, labels or numbers, suggesting operational review while away.
+Composition: landscape 4:3, medium-wide shot, owner centered-right, window and airplane readable across left and background. Lower-left and lower-center leave clean space for a separate animated company-overview chart. Full bleed photo, no frame or collage.
+Style: premium cinematic business campaign photography, natural person and hands, navy #16345e and cobalt #205bc3 color palette, blue twilight outside, soft warm lounge light inside, confident calm atmosphere, rich depth with readable midtones. Match a polished Taiwan business AI website.
+Constraints: no readable airport signs, logos, brand marks, letters, numerals, watermark, robot, hologram, baked-in floating charts, network lines or diagram. This is a conceptual business-travel scene, not an actual customer or live data screenshot. High quality, photorealistic.

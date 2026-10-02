@@ -1,0 +1,345 @@
+.hero.hero-business-network {
+  min-height: 800px;
+  background: #102845;
+}
+
+.hero-business-network .hero-content {
+  min-height: 800px;
+  padding-top: 74px;
+  pointer-events: none;
+}
+
+.hero-business-network .hero-copy {
+  width: 47%;
+  max-width: 560px;
+  position: relative;
+  z-index: 4;
+}
+
+.hero-business-network #hero-title > span:nth-child(2) {
+  margin-inline-start: .55em;
+}
+
+.hero-business-network #hero-title > span:nth-child(3) {
+  margin-inline-start: 1.1em;
+}
+
+.hero-business-network .hero-content a {
+  pointer-events: auto;
+}
+
+.hero-business-network .hero-bottom {
+  position: relative;
+  z-index: 4;
+}
+
+.hero-business-network .hero-caption {
+  max-width: 320px;
+  text-align: right;
+  font-size: 20px;
+  font-weight: 600;
+  color: #f8fbff;
+}
+
+.hero-business-network .hero-note {
+  max-width: 455px;
+}
+
+.hero-reading-shade {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #102845 0%, rgba(16, 40, 69, .97) 29%, rgba(16, 40, 69, .87) 38%, rgba(16, 40, 69, .24) 51%, transparent 63%);
+}
+
+.hero-reading-shade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(16, 40, 69, .95), transparent 24%, transparent 85%, rgba(16, 40, 69, .22));
+}
+
+.hero-network-stage {
+  position: absolute;
+  z-index: 1;
+  width: 65%;
+  height: 100%;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 100%);
+}
+
+.hero-network-stage::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(16, 40, 69, .13), transparent 30%), linear-gradient(0deg, rgba(16, 40, 69, .58), transparent 32%);
+}
+
+.hero-scene-layer {
+  position: absolute;
+  overflow: hidden;
+  mask-image: radial-gradient(ellipse closest-side at center, #000 38%, rgba(0, 0, 0, .96) 58%, rgba(0, 0, 0, .45) 82%, transparent 100%);
+}
+
+.hero-scene-layer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: business-scene-breath 20s ease-in-out infinite alternate;
+  filter: saturate(.8) contrast(1.04);
+}
+
+.hero-scene-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(21, 57, 104, .13);
+  mix-blend-mode: color;
+}
+
+.hero-scene-store {
+  z-index: 1;
+  left: -8%;
+  top: 19%;
+  width: 65%;
+  height: 62%;
+}
+
+.hero-scene-store img {
+  object-position: 42% center;
+  animation-delay: -6s;
+}
+
+.hero-scene-office {
+  z-index: 2;
+  left: 26%;
+  top: 48%;
+  width: 77%;
+  height: 58%;
+}
+
+.hero-scene-office img {
+  object-position: center 46%;
+  animation-delay: -12s;
+}
+
+.hero-scene-airport {
+  z-index: 0;
+  left: 33%;
+  top: -5%;
+  width: 73%;
+  height: 65%;
+}
+
+.hero-scene-airport img {
+  object-position: 61% center;
+  animation-delay: -3s;
+}
+
+.hero-network-canvas {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-chart {
+  position: absolute;
+  z-index: 4;
+  width: 190px;
+  text-align: center;
+  perspective: 800px;
+  transform: translate(-50%, -50%);
+}
+
+.hero-chart-store {
+  left: 24%;
+  top: 56%;
+}
+
+.hero-chart-office {
+  left: 59%;
+  top: 79%;
+}
+
+.hero-chart-airport {
+  left: 84%;
+  top: 37%;
+}
+
+.hero-chart-traveler {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.47;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.hero-chart-graphic {
+  width: 100%;
+  aspect-ratio: 1.47;
+  transform-style: preserve-3d;
+  animation: management-chart-turn 22s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(88, 164, 255, .85)) drop-shadow(0 0 15px rgba(32, 91, 195, .52));
+  will-change: transform;
+}
+
+.hero-chart-office .hero-chart-graphic {
+  animation-duration: 26s;
+  animation-delay: -2s;
+}
+
+.hero-chart-airport .hero-chart-graphic {
+  animation-duration: 30s;
+  animation-delay: -4s;
+}
+
+.hero-chart svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  stroke: #91c9ff;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.hero-chart .chart-bright {
+  stroke: #dbeafe;
+  stroke-width: 2.3;
+}
+
+.hero-chart .chart-soft {
+  stroke: #78b6ff;
+  stroke-opacity: .52;
+  stroke-width: 1;
+}
+
+.hero-chart .chart-glass {
+  fill: rgba(16, 40, 69, .38);
+  stroke-opacity: .65;
+  stroke-width: 1.1;
+}
+
+.hero-chart figcaption {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #dbeafe;
+  padding: 5px 13px;
+  margin-top: 5px;
+  border-radius: 8px;
+  background: rgba(16, 40, 69, .8);
+  box-shadow: 0 5px 20px rgba(16, 40, 69, .25);
+  backdrop-filter: blur(10px);
+  max-width: 100%;
+}
+
+.hero-chart figcaption strong {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.hero-chart .hero-label-term {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+@keyframes management-chart-turn {
+  from { transform: rotateX(10deg) rotateY(-18deg) rotateZ(-7deg); }
+  to { transform: rotateX(10deg) rotateY(342deg) rotateZ(-7deg); }
+}
+
+@keyframes business-scene-breath {
+  from { transform: scale(1.02) translateY(-.5%); }
+  to { transform: scale(1.07) translateY(.5%); }
+}
+
+@media (min-width: 1600px) {
+  .hero.hero-business-network, .hero-business-network .hero-content { min-height: 860px; }
+  .hero-business-network .hero-content { padding-top: 86px; }
+  .hero-chart { width: 214px; }
+}
+
+@media (max-width: 1180px) {
+  .hero-business-network .hero-copy { width: 49%; }
+  .hero-network-stage { width: 66%; }
+  .hero-chart { width: 165px; }
+  .hero-chart-store { left: 28%; }
+  .hero-chart-airport { left: 82%; }
+  .hero-business-network .hero-actions { gap: 22px; }
+}
+
+@media (max-width: 1020px) {
+  .hero-business-network .hero-copy { width: 55%; }
+  .hero-network-stage { width: 66%; }
+  .hero-reading-shade { background: linear-gradient(90deg, #102845, rgba(16, 40, 69, .93) 38%, rgba(16, 40, 69, .32) 56%, transparent 73%); }
+  .hero-chart { width: 142px; }
+  .hero-chart-store { left: 35%; top: 60%; }
+  .hero-chart-office { left: 62%; top: 82%; }
+  .hero-chart-airport { left: 83%; top: 40%; }
+  .hero-chart figcaption { padding-inline: 10px; }
+  .hero-chart figcaption strong { font-size: 16px; }
+}
+
+@media (max-width: 760px) {
+  .hero.hero-business-network, .hero-business-network .hero-content { min-height: 1260px; }
+  .hero-business-network .hero-content { padding-top: 56px; padding-bottom: 26px; }
+  .hero-business-network .hero-copy { width: 100%; max-width: 620px; }
+  .hero-business-network .hero-bottom { margin-top: 710px; }
+  .hero-business-network .hero-caption { text-align: left; max-width: 100%; }
+  .hero-business-network .hero-note { max-width: 340px; }
+  .hero-network-stage { top: auto; bottom: 122px; width: 100%; height: 680px; }
+  .hero-reading-shade { background: linear-gradient(180deg, #102845 0%, #102845 30%, rgba(16, 40, 69, .6) 38%, transparent 50%); }
+  .hero-reading-shade::after { background: linear-gradient(0deg, rgba(16, 40, 69, .97), transparent 20%); }
+  .hero-scene-store { left: -10%; top: 17%; width: 77%; height: 58%; }
+  .hero-scene-office { left: 9%; top: 51%; width: 100%; height: 55%; }
+  .hero-scene-airport { left: 18%; top: -4%; width: 82%; height: 57%; }
+  .hero-scene-airport img { object-position: 83% center; }
+  .hero-chart { width: 135px; }
+  .hero-chart-store { left: 24%; top: 47%; }
+  .hero-chart-office { left: 55%; top: 79%; }
+  .hero-chart-airport { left: 80%; top: 23%; }
+  .hero-chart figcaption { font-size: 16px; padding: 4px 9px; }
+  .hero-chart figcaption strong { font-size: 16px; }
+}
+
+@media (max-width: 390px) {
+  .hero-chart { width: 118px; }
+  .hero-chart-airport { left: 79%; }
+  .hero-business-network .hero-bottom { margin-top: 710px; }
+}
+
+@media (max-width: 360px) {
+  .hero.hero-business-network, .hero-business-network .hero-content { min-height: 1340px; }
+  .hero-business-network .hero-actions { gap: 18px; }
+  .hero-network-stage { height: 680px; bottom: 138px; }
+  .hero-chart { width: 112px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-chart-graphic, .hero-scene-layer img { animation: none; }
+  .hero-chart-graphic { transform: rotateX(10deg) rotateY(-18deg) rotateZ(-7deg); }
+}
+
+@media print {
+  .hero.hero-business-network, .hero-business-network .hero-content { min-height: 760px; }
+  .hero-network-stage { width: 65%; height: 100%; bottom: auto; top: 0; }
+  .hero-business-network .hero-copy { width: 47%; }
+  .hero-business-network .hero-bottom { margin-top: 55px; }
+  .hero-chart-graphic, .hero-scene-layer img { animation: none; }
+  .hero-chart-traveler { transform: none !important; opacity: 1 !important; }
+}
