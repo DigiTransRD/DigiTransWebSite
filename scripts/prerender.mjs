@@ -60,7 +60,7 @@ const llmsIndex = [
   '## 產品與企業導入',
   ...detailPages.map(page => '- [' + markdownText(page.title) + '](' + site.url + page.path + 'index.md): ' + page.description),
   '## 網站入口',
-  '- [首頁](' + site.url + '/): 產品價值、三步驟啟用、三種導入方案與常見問題。',
+  '- [首頁](' + site.url + '/): 營運場景、三種生成式應用、產品特色、導入方案與常見問題。',
   '- [預約導入評估](' + site.url + '/contact/): 與資傳數位討論既有系統、資料與業務需求。',
   '- [產業技能文章](' + site.url + '/articles/skills/): 業態知識與工作場景。',
   '- [趨勢與觀點](' + site.url + '/articles/trends/): 企業 AI 應用與轉型觀點。',

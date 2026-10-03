@@ -86,3 +86,27 @@ PM 已指定：移除暫停動效按鈕、備份現有 Hero，以門市收銀、
 - JavaScript 及內嵌腳本語法通過，正常載入頁面無 error／warning。像素取樣查核曾產生 Canvas readback 效能提示，為驗證程式讀取像素所致；產品繪製沒有該讀取操作。
 - 預覽：`http://127.0.0.1:4176/output/homepage-draft/index.html?review=network-flow#main-content`。
 - 截圖：`hero-network-flow-desktop.png`、`hero-network-flow-mobile-scenes.png`、`hero-network-flow-mobile-full.png`。
+
+## 2026-10-03：整合至正式 Vue 首頁
+
+PM 已授權將完整 homepage-draft 整合至正式目錄，再由 PM 使用 GitHub Desktop 推送。實際根目錄為 `D:\BiShop\AiAgentGitHub\DigiTransWebSite`；沿用既有 Vue、Vite、RouterLink、ArrowIcon、ScenarioExplorer、內容來源、預先渲染與 GitHub Pages 發行流程，不新增套件。這是已上線網站首頁優化，不涉及 API、資料庫、業務資料或資料遷移。
+
+- [x] 確認正式首頁、共用 Layout、建置與部署目錄，核對草案最新版文案與動畫。
+- [x] 更新 `src/views/HomePage.vue` 為草案的首頁區段，保留共用頁首、頁尾與洽詢入口。
+- [x] 新增首頁 Hero 元件與具卸載清理的 TypeScript 動畫，避免切換內頁時遺留 RAF、Observer 及事件。
+- [x] 調整既有 `ScenarioExplorer.vue` 為草案工作情境，保留點擊與方向鍵／Home／End 操作。
+- [x] 將圖片納入 `src/assets/images/homepage`，由 Vite 產生可部署的雜湊資產；原始草案與備份保留。
+- [x] 首頁樣式限定於首頁容器，避免影響洽詢、產品及其他內頁；保留 reduced motion 與響應式版型。
+- [x] FAQ 及方案名稱讀取既有內容來源，保留 SEO 結構化資料並同步 llms.txt 首頁索引。
+- [x] 執行正式 `npm run build`，確認生成的首頁、CSS、JavaScript 及圖片均存在於 `dist`。
+- [x] 驗證正式建置的桌機／手機、完整動畫循環、情境切換、FAQ、連結、前往內頁再返回及正常瀏覽器訊息。
+- [x] 回寫進度，提供正式本機預覽；不代替 PM 推送或發布。
+### 正式整合查核結果
+
+- 正式 `npm run build` 通過，產生 21 個靜態 HTML 與 10 份 Markdown；首頁引用的部署資產均存在，沒有依賴草案目錄。
+- 四張圖片與原稿雜湊一致，原 Hero 備份未變；圖片、樣式及動畫已納入正式 Vite 建置。
+- 1440、1024、768、390、360、320px 均無水平溢位。完整動畫循環通過，三圖表會自轉、縮小進入中心、消失，再沿不同出口放大。
+- 情境點擊與鍵盤、FAQ、手機選單、洽詢入口、reduced motion、離開首頁清理及返回重啟均通過。瀏覽器無 error／warning，未送出洽詢表單。
+- FAQ 與方案沿用既有內容來源；未修改 API、資料庫、其他內頁、套件或部署流程。
+- 正式建置預覽：`http://127.0.0.1:4177/`。驗證截圖保存於本機視覺化目錄。
+- 尚未提交、推送或發布，由 PM 使用 GitHub Desktop 推送至 main 後觸發既有 GitHub Pages 工作流程。
