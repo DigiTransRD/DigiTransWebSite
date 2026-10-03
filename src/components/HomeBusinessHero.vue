@@ -3,9 +3,12 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import ArrowIcon from './ArrowIcon.vue'
 import { productIdentity } from '../content/homeContent'
 import { createBusinessNetworkAnimation } from './createBusinessNetworkAnimation'
-import airportImage from '../assets/images/homepage/hero-v2-airport-owner.png'
-import storeImage from '../assets/images/homepage/hero-v2-store-checkout.png'
-import officeImage from '../assets/images/homepage/hero-v2-headquarters-office.png'
+import airportImage from '../assets/images/homepage/hero-v2-airport-owner.webp'
+import airportMobileImage from '../assets/images/homepage/hero-v2-airport-owner-mobile.webp'
+import storeImage from '../assets/images/homepage/hero-v2-store-checkout.webp'
+import storeMobileImage from '../assets/images/homepage/hero-v2-store-checkout-mobile.webp'
+import officeImage from '../assets/images/homepage/hero-v2-headquarters-office.webp'
+import officeMobileImage from '../assets/images/homepage/hero-v2-headquarters-office-mobile.webp'
 
 const heroElement = ref<HTMLElement | null>(null)
 let stopAnimation: (() => void) | undefined
@@ -19,9 +22,9 @@ onUnmounted(() => { stopAnimation?.() })
 <template>
 <section ref="heroElement" class="hero hero-business-network" aria-labelledby="hero-title">
       <div class="hero-network-stage" aria-label="門市營運、總部後台與策略管理三場景視覺">
-        <div class="hero-scene-layer hero-scene-airport"><img :src="airportImage" width="1448" height="1086" alt="老闆出國時在機場候機區使用平板觀看營運資訊，窗外可見飛機" fetchpriority="high" /></div>
-        <div class="hero-scene-layer hero-scene-store"><img :src="storeImage" width="1448" height="1086" alt="門市人員在收銀櫃台操作 POS，顧客以付款卡結帳" fetchpriority="high" /></div>
-        <div class="hero-scene-layer hero-scene-office"><img :src="officeImage" width="1448" height="1086" alt="總部辦公室的營運人員共同檢視電腦上的業務資訊" fetchpriority="high" /></div>
+        <div class="hero-scene-layer hero-scene-airport"><picture><source media="(max-width: 760px)" :srcset="airportMobileImage" /><img :src="airportImage" width="1448" height="1086" alt="老闆出國時在機場候機區使用平板觀看營運資訊，窗外可見飛機" loading="eager" decoding="async" fetchpriority="high" /></picture></div>
+        <div class="hero-scene-layer hero-scene-store"><picture><source media="(max-width: 760px)" :srcset="storeMobileImage" /><img :src="storeImage" width="1448" height="1086" alt="門市人員在收銀櫃台操作 POS，顧客以付款卡結帳" loading="eager" decoding="async" fetchpriority="high" /></picture></div>
+        <div class="hero-scene-layer hero-scene-office"><picture><source media="(max-width: 760px)" :srcset="officeMobileImage" /><img :src="officeImage" width="1448" height="1086" alt="總部辦公室的營運人員共同檢視電腦上的業務資訊" loading="eager" decoding="async" fetchpriority="high" /></picture></div>
         <canvas class="hero-network-canvas" aria-hidden="true"></canvas>
         <figure class="hero-chart hero-chart-store">
           <div class="hero-chart-traveler" aria-hidden="true"><div class="hero-chart-graphic"><svg viewBox="0 0 190 130"><rect class="chart-glass" x="8" y="8" width="174" height="110" rx="9" /><path class="chart-soft" d="M24 21H74M148 21H166" /><rect x="23" y="30" width="144" height="77" rx="2" /><path d="M42 30V107M76 30V107M109 30V107M140 30V107M23 47H167M23 67H167M23 87H167" /><path class="chart-soft" d="M30 38H35M52 38H64M85 38H99M119 38H130M149 38H158M30 57H35M30 77H35M30 97H35M49 57H66M49 77H62M49 97H66M116 57H132M148 77H158M116 97H131M148 97H159" /><rect class="chart-bright" x="76" y="47" width="33" height="40" /><path class="chart-bright" d="M82 57H101M82 77H97" /><rect class="chart-bright" x="107" y="85" width="4" height="4" /></svg></div></div>
@@ -40,7 +43,7 @@ onUnmounted(() => { stopAnimation?.() })
       <div class="hero-content container">
         <div class="hero-copy">
           <p class="eyebrow hero-eyebrow"><span class="status-dot" aria-hidden="true"></span> ABI / {{ productIdentity.fullName }}</p>
-          <h1 id="hero-title"><span>掌握營運</span><span>看懂數據</span><span><em>做好決策</em></span></h1>
+          <h1 id="hero-title"><span>掌握營運</span><span>看懂數據</span><span><em>做對決策</em></span></h1>
           <p class="hero-description">AI轉型，不必花大錢建團隊。<br />ABI幫您快速蛻變成為AI企業。</p>
           <div class="hero-actions"><RouterLink to="/#applications" class="button">看 AI 能做什麼 <ArrowIcon direction="down" /></RouterLink><RouterLink to="/abi-assistant/" class="text-link">認識 ABI <ArrowIcon /></RouterLink></div>
         </div>

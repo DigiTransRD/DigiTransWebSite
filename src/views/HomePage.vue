@@ -3,23 +3,23 @@ import ArrowIcon from '../components/ArrowIcon.vue'
 import HomeBusinessHero from '../components/HomeBusinessHero.vue'
 import ScenarioExplorer from '../components/ScenarioExplorer.vue'
 import { faqItems, solutionPlans } from '../content/homeContent'
-import businessScenesImage from '../assets/images/homepage/business-scenes.png'
+import businessScenesImage from '../assets/images/homepage/business-scenes.webp'
+import businessScenesMobileImage from '../assets/images/homepage/business-scenes-mobile.webp'
 import '../styles/homepage-visual.css'
 </script>
 
 <template>
   <div class="homepage-visual">
     <HomeBusinessHero />
-    <div class="integration-strip"><div class="integration-inner container"><span class="integration-intro">從你已經擁有的系統開始</span><div class="integration-names"><span>ERP</span><span>POS</span><span>CRM</span><span>企業知識</span></div><RouterLink class="text-link" to="/integrations/">了解整合 <ArrowIcon /></RouterLink></div></div>
+    <div class="integration-strip"><div class="integration-inner container"><span class="integration-intro">升級舊系統，注入AI智慧</span><div class="integration-names"><span>ERP, POS, CRM, 進銷存, Excel表格...</span></div><RouterLink class="text-link" to="/integrations/">了解整合 <ArrowIcon /></RouterLink></div></div>
     <section id="applications" class="section" aria-labelledby="applications-title">
       <div class="container">
-        <div class="section-heading"><div><p class="eyebrow">FROM WORDS TO WORK</p><h2 id="applications-title">說出需求，<br />長出你的商業應用。</h2></div><p>從一份表單、一張報表，<br />到日常管理 APP。</p></div>
+        <div class="section-heading"><div><p class="eyebrow">FROM WORDS TO WORK</p><h2 id="applications-title">說出需求，<br />生成你的商業應用。</h2></div><p>從一份表單、一張報表，<br />到營運管理 APP。</p></div>
         <div class="application-grid">
-          <RouterLink class="application-card" to="/capabilities/generative-forms/"><div class="application-photo"><img :src="businessScenesImage" width="2172" height="724" alt="零售店主使用筆電處理日常工作，營運情境示意" loading="lazy" /><span class="photo-tag">讓前線資訊進入工作流程</span></div><div class="application-body"><div class="application-kicker">01 / 生成式表單</div><h3>表單，用說的。</h3><p>描述需求，確認後發布收集。</p><span class="application-link">探索生成式表單 <ArrowIcon /></span></div></RouterLink>
-          <RouterLink class="application-card" to="/capabilities/generative-reports/"><div class="application-photo"><img class="scene-center" :src="businessScenesImage" width="2172" height="724" alt="餐飲主管使用平板檢視營運，營運情境示意" loading="lazy" /><span class="photo-tag">讓經營決策有資料依據</span></div><div class="application-body"><div class="application-kicker">02 / 生成式報表</div><h3>報表，用問的。</h3><p>提出營運問題，讀懂授權資料。</p><span class="application-link">探索生成式報表 <ArrowIcon /></span></div></RouterLink>
-          <RouterLink class="application-card" to="/capabilities/generative-app/"><div class="application-photo"><img class="scene-right" :src="businessScenesImage" width="2172" height="724" alt="旅宿經理在櫃台操作筆電，營運情境示意" loading="lazy" /><span class="photo-tag">讓既有資料接上新應用</span></div><div class="application-body"><div class="application-kicker">03 / 生成式 APP</div><h3>管理 APP，用生成的。</h3><p>從既有資料，生成管理介面。</p><span class="application-link">探索生成式 APP <ArrowIcon /></span></div></RouterLink>
+          <RouterLink class="application-card" to="/capabilities/generative-forms/"><div class="application-photo"><picture><source media="(max-width: 760px)" :srcset="businessScenesMobileImage" /><img :src="businessScenesImage" width="2172" height="724" alt="零售店主使用筆電處理日常工作，營運情境示意" loading="lazy" decoding="async" /></picture><span class="photo-tag">讓門店管理工作更高效</span></div><div class="application-body"><div class="application-kicker">01 / 生成式表單</div><h3>設計表單，用說的。</h3><p>自然語言描述需求-&gt;生成草稿-&gt;審核修訂-&gt;發佈表單</p><span class="application-link">探索生成式表單 <ArrowIcon /></span></div></RouterLink>
+          <RouterLink class="application-card" to="/capabilities/generative-reports/"><div class="application-photo"><picture><source media="(max-width: 760px)" :srcset="businessScenesMobileImage" /><img class="scene-center" :src="businessScenesImage" width="2172" height="724" alt="餐飲主管使用平板檢視營運，營運情境示意" loading="lazy" decoding="async" /></picture><span class="photo-tag">讓後台統計報表更彈性</span></div><div class="application-body"><div class="application-kicker">02 / 生成式報表</div><h3>製作報表，用問的。</h3><p>自然語言提出問題-&gt;產出範本-&gt;版面修訂-&gt;發行報表</p><span class="application-link">探索生成式報表 <ArrowIcon /></span></div></RouterLink>
+          <RouterLink class="application-card" to="/capabilities/generative-app/"><div class="application-photo"><picture><source media="(max-width: 760px)" :srcset="businessScenesMobileImage" /><img class="scene-right" :src="businessScenesImage" width="2172" height="724" alt="旅宿經理在櫃台操作筆電，營運情境示意" loading="lazy" decoding="async" /></picture><span class="photo-tag">讓企業營運流程更順暢</span></div><div class="application-body"><div class="application-kicker">03 / 生成式 APP</div><h3>開發系統，用生成的。</h3><p>AI分析-&gt;生成功能-&gt;修訂流程-&gt;部署上線</p><span class="application-link">探索生成式 APP <ArrowIcon /></span></div></RouterLink>
         </div>
-        <p class="image-note">照片為營運情境示意；各項應用可依企業需求導入。</p>
       </div>
     </section>
     <section id="features" class="features-section" aria-labelledby="features-title">
