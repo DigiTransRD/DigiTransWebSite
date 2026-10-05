@@ -131,7 +131,29 @@ PM 已同意轉換 WebP、手機尺寸版本及保留既有構圖與動畫。僅
 
 PM 已核准：流程文字 20px → 16px；六張指定真人情境照片；每卡兩圖 3 秒淡入淡出；圖片開全螢幕，其他區域進原功能頁。圖片與連結分離，不新增套件。
 
-- [ ] 生成並檢視六張指定情境，轉為桌機與手機 WebP。
-- [ ] 沿用首頁卡片外觀，分離圖片按鈕與功能說明連結。
-- [ ] 實作輪播、可存取全螢幕展示、背景／Esc／關閉按鈕及離頁清理。
-- [ ] 流程文案縮小兩級；驗證正式建置、桌機／手機、圖片下載與操作。
+- [x] 生成並檢視六張指定情境，轉為桌機與手機 WebP。
+- [x] 沿用首頁卡片外觀，分離圖片按鈕與功能說明連結。
+- [x] 實作輪播、可存取全螢幕展示、背景／Esc／關閉按鈕及離頁清理。
+- [x] 流程文案縮小兩級；驗證正式建置、桌機／手機、圖片下載與操作。
+
+### 本次查核結果
+
+- 生成六張真人營運情境圖片，以藍色發光資料線串聯；正式資產位於 src/assets/images/homepage，1536×1024 桌機 WebP 與 720×480 手機 WebP，未新增套件。
+- 每卡兩張圖片，3 秒淡入淡出；等待畫面內下一張圖片載入後切換。離開首頁清理計時器與 Observer；全螢幕展示期間、頁面隱藏及 reduced motion 時停止輪播。
+- 流程文字桌機與手機均為 16px；320／390／768／1440px 無水平溢位，桌機三張卡片底部連結對齊。
+- 點圖片開原尺寸全螢幕展示；背景點擊、Esc、關閉按鈕通過，關閉後焦點返回原圖片按鈕。三種功能連結皆正確導頁，離頁後對話框移除且捲動鎖恢復。
+- PM 追加要求已完成：移除三張圖片右上角輪播／放大標記，仍保留點圖片放大與輪播。訂貨單筆電改朝向店員；顧客改右手握手機、左手食指點按，第二次局部修正後檢視並替換桌機及手機資產。
+- 正式 npm run build 通過，產生 21 靜態頁與 10 Markdown；最終無右上角標記，圖片放大及輪播驗證通過，互動驗證無 JavaScript 錯誤。
+- 圖片原 PNG 存於本機 imagegen 原始目錄；只將正式 WebP 納入專案。尚未提交、推送或發布。
+
+### Imagegen 提示詞記錄
+
+使用內建 imagegen，非 CLI。共同設定：3:2 真人攝影、台灣商業情境、海軍藍服裝與自然光、各場景於小卡片可辨識、細藍色發光線與資料表／圖表意象串聯；不加標題、水印，主要人物與操作保留在畫面中央。各張場景提示如下：
+- `forms-order`：Two simultaneous scenes smoothly blended left/right: Taiwanese retail employee at shop counter using laptop to design a promotional customer order form with product rows; customer at home uses smartphone with recognizable green LINE messaging interface and an order form to order these products.
+- `forms-replenishment`：Two simultaneous scenes blended left/right: Taiwanese shop employee walks grocery shelves, checks stock and fills replenishment form on tablet; headquarters warehouse staff at computer receiving the order and dispatching cartons, warehouse shelving visible.
+- `reports-live`：Two simultaneous scenes blended left/right: Taiwanese retail cashier processes customer's checkout transaction at POS counter; headquarters office analysts study live business reports on widescreen computer with bar charts and tables.
+- `reports-owner`：Multiple Taiwanese retail checkout counters in separate stores visible as two smaller scenes on left, cashiers processing sales; larger scene on right shows Taiwanese business owner seated in rear passenger seat of a car reviewing operational charts on tablet. Clearly passenger, not driver.
+- `app-erp`：Two simultaneous scenes blended left/right: field deployment engineer works with IT employee in office to connect existing ERP system, laptops with data tables and integration screens; headquarters staff immediately tests and accepts a business APP on tablet and desktop.
+- `app-cycle`：Four distinct photographic scenes in a balanced 2 by 2 blended composition, showing entire APP operation cycle: upper left Taiwanese store staff inspecting shelves and requesting restock on tablet; upper right supplier packing and shipping goods in cartons; bottom right delivery logistics worker bringing goods beside delivery van; bottom left store staff receiving goods and scanning cartons. Connect scenes clockwise with thin elegant glowing blue data lines.
+
+訂貨單局部修正提示：保留人物、背景、商品懸浮圖與資料線，筆電螢幕朝店員、背面朝鏡頭；顧客右手從手機右側握持、右拇指在右邊，左手從左下方接近並以左食指點螢幕，左右手腕與前臂清楚分離，避免同側手、反向手腕或多餘手指。
