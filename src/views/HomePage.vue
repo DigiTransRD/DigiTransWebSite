@@ -2,7 +2,6 @@
 import ArrowIcon from '../components/ArrowIcon.vue'
 import HomeBusinessHero from '../components/HomeBusinessHero.vue'
 import ScenarioExplorer from '../components/ScenarioExplorer.vue'
-import { faqItems, solutionPlans } from '../content/homeContent'
 import HomeApplicationCards from '../components/HomeApplicationCards.vue'
 import '../styles/homepage-visual.css'
 </script>
@@ -28,8 +27,6 @@ import '../styles/homepage-visual.css'
         <ScenarioExplorer />
       </div>
     </section>
-    <section id="solutions" class="start-section" aria-labelledby="start-title"><div class="start-layout container"><div class="start-copy"><p class="eyebrow">START WITH ONE REAL TASK</p><h2 id="start-title">從一個場景，<br />開始你的 AI 轉型。</h2><div class="plan-links"><RouterLink v-for="plan in solutionPlans" :key="plan.name" class="plan-link" to="/contact/" :aria-label="'洽詢' + plan.name">{{ plan.name }}</RouterLink></div><p class="start-condition">完成安裝、資料連接與權限設定後，即可啟用。<br />專屬流程與特殊介接，由工程師協作完成。</p></div><RouterLink class="button button-gold" to="/contact/">預約導入評估 <ArrowIcon /></RouterLink></div></section>
-    <section id="faq" class="faq-section" aria-labelledby="faq-title"><div class="faq-layout container"><div class="faq-copy"><p class="eyebrow">QUESTIONS, ANSWERED.</p><h2 id="faq-title">你可能正想知道。</h2><p>點開你在意的問題，<br />再多了解一點。</p></div><div class="faq-list"><details v-for="item in faqItems" :key="item.question"><summary>{{ item.question }}<span aria-hidden="true">+</span></summary><p>{{ item.answer }}</p></details></div></div></section>
 
   </div>
 </template>

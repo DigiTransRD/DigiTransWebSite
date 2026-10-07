@@ -1,6 +1,6 @@
 import { detailPages } from './detailContent'
 import { getAllArticles, getArticleBySlug } from './articles'
-import { capabilities, productFeatures, productIdentity, faqItems } from './homeContent'
+import { capabilities, productFeatures, productIdentity } from './homeContent'
 
 export const site = {
   name: productIdentity.name,
@@ -39,7 +39,6 @@ export function getPageMetadata(path: string) {
     { '@type': 'SoftwareApplication', '@id': site.url + '/#software', name: site.name, alternateName: ['ABI', productIdentity.fullName, productIdentity.chineseName, productIdentity.alternateName], url: site.url + productIdentity.path, mainEntityOfPage: { '@id': site.url + productIdentity.path + '#page' }, applicationCategory: 'BusinessApplication', applicationSubCategory: productIdentity.category, operatingSystem: 'Windows, Web', description: productIdentity.definition, featureList: [...capabilities, ...productFeatures].map(item => item.label), provider: { '@id': site.url + '/#organization' }, publisher: { '@id': site.url + '/#organization' } },
   ]
   if (article) graph.push({ '@type': 'Article', '@id': url + '#article', headline: article.translation.title, description, url, inLanguage: 'zh-Hant', mainEntityOfPage: { '@id': url + '#page' }, publisher: { '@id': site.url + '/#organization' }, keywords: article.tags })
-  if (path === '/') graph.push({ '@type': 'FAQPage', mainEntity: faqItems.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) })
   if (path !== '/' && known) graph.push({ '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: '首頁', item: site.url + '/' }, { '@type': 'ListItem', position: 2, name: title.split('｜')[0], item: url }] })
   return { title, description, url, known, robots, markdownUrl, ogType, jsonLd: { '@context': 'https://schema.org', '@graph': graph } }
 }
