@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:sandbox.egroupai.com)",
+      "Bash(npm run *)",
+      "Bash(ls \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\Docs\\\\Specifications\\\\AbiAssist\" \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\Docs\\\\Specifications\\\\AbiGenApp\")",
+      "Bash(ls \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\AbiAssist\")",
+      "Bash(wc -l \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\Docs\\\\Specifications\\\\AbiAssist\\\\AbiAsstSpec.md\" \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\Docs\\\\Specifications\\\\AbiGenApp\\\\AbiGenAppOverview.md\" \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\Docs\\\\Specifications\\\\AbiGenApp\\\\AbiGenAppSpec.md\" \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\Docs\\\\Specifications\\\\AbiGenApp\\\\AbiGenAppStaticViewArtifactFeatures.md\" \"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\Docs\\\\Specifications\\\\AbiGenApp\\\\AbiGenAppPermissionManagementSpec.md\")",
+      "Bash(grep -n 'replace\\(/\\\\^' src/views/HomePage.vue)",
+      "Bash(perl -i -pe 's/replace\\\\\\(\\\\/\\\\^\\\\x{FEFF}\\\\/, /replace\\(\\\\/^\\\\\\\\uFEFF\\\\/, /' src/views/HomePage.vue)",
+      "Bash(perl -i -pe 's/\\\\/\\\\^\\\\xEF\\\\xBB\\\\xBF\\\\//\\\\/^\\\\\\\\uFEFF\\\\//' src/views/HomePage.vue)",
+      "Bash(xxd)",
+      "PowerShell($path = \"D:\\\\BiShop\\\\AiAgentGitHub\\\\DigiTransWebSite\\\\src\\\\views\\\\HomePage.vue\"; $content = [System.IO.File]::ReadAllText\\($path\\); $bom = [char]0xFEFF; $content = $content.Replace\\(\"replace\\(/^$bom/, ''\\)\", \"replace\\(/^﻿/, ''\\)\"\\); [System.IO.File]::WriteAllText\\($path, $content, \\(New-Object System.Text.UTF8Encoding\\($false\\)\\)\\); Select-String -Path $path -Pattern 'uFEFF')",
+      "PowerShell($line = \\(Get-Content \"D:\\\\BiShop\\\\AiAgentGitHub\\\\DigiTransWebSite\\\\src\\\\views\\\\HomePage.vue\" -Encoding UTF8\\)[88]; $line; \\($line.ToCharArray\\(\\) | ForEach-Object { '{0:X4}' -f [int]$_ }\\) -join ' ')",
+      "PowerShell($path = \"D:\\\\BiShop\\\\AiAgentGitHub\\\\DigiTransWebSite\\\\src\\\\views\\\\HomePage.vue\"; $content = [System.IO.File]::ReadAllText\\($path\\); $bom = [char]0xFEFF; $old = \"replace\\(/^\" + $bom + \"/, ''\\)\"; $new = \"replace\\(/^\" + [char]92 + \"uFEFF/, ''\\)\"; $content = $content.Replace\\($old, $new\\); [System.IO.File]::WriteAllText\\($path, $content, \\(New-Object System.Text.UTF8Encoding\\($false\\)\\)\\); \\(Get-Content $path -Encoding UTF8\\)[88])",
+      "Bash(python -)",
+      "Read(//d/BiShop/AiAgentGitHub/ABI/AbiAssist/AbiAsstAPI/Controllers/**)",
+      "Read(//d/BiShop/AiAgentGitHub/ABI/AbiXpand/AbiXpand.MySqlAdapter/DbStructure/**)",
+      "Read(//d/BiShop/AiAgentGitHub/ABI/AbiAssist/AbiAsstAPI/Services/**)",
+      "Read(//d/BiShop/AiAgentGitHub/ABI/AbiAssist/AbiAsstAPI/**)",
+      "PowerShell($asm = [System.Reflection.Assembly]::LoadFrom\\(\"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\AbiAssist\\\\packages\\\\LineBotSDK.2.18.40\\\\lib\\\\net45\\\\LineBot.dll\"\\); try { $types = $asm.GetTypes\\(\\) } catch { $types = $_.Exception.LoaderExceptions | Out-Null; $types = $_.Exception.Types | Where-Object { $_ -ne $null } }; $types | Where-Object { $_.Name -match 'QuickReply|TextMessage' } | ForEach-Object { $_.FullName })",
+      "PowerShell($asm = [System.Reflection.Assembly]::LoadFrom\\(\"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\AbiAssist\\\\packages\\\\LineBotSDK.2.18.40\\\\lib\\\\net45\\\\LineBot.dll\"\\); try { $t = $asm.GetTypes\\(\\) } catch [System.Reflection.ReflectionTypeLoadException] { $t = $_.Exception.Types | Where-Object { $_ } }; \"COUNT: $\\($t.Count\\)\"; $t | ForEach-Object { $_.FullName } | Where-Object { $_ -match 'Quick|Text' })",
+      "PowerShell($asm = [System.Reflection.Assembly]::LoadFrom\\(\"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\AbiAssist\\\\packages\\\\LineBotSDK.2.18.40\\\\lib\\\\net45\\\\LineBot.dll\"\\); try { $t = $asm.GetTypes\\(\\) } catch [System.Reflection.ReflectionTypeLoadException] { $t = $_.Exception.Types | Where-Object { $_ } }; foreach \\($n in @\\('isRock.LineBot.TextMessage','isRock.LineBot.QuickReply','isRock.LineBot.QuickReplyMessageAction','isRock.LineBot.QuickReplyItemBase'\\)\\) { $ty = $t | Where-Object { $_.FullName -eq $n }; \"=== $n \\(base: $\\($ty.BaseType.FullName\\)\\)\"; $ty.GetProperties\\(\\) | ForEach-Object { \"  P \" + $_.PropertyType.Name + \" \" + $_.Name }; $ty.GetFields\\(\\) | ForEach-Object { \"  F \" + $_.FieldType.Name + \" \" + $_.Name }; $ty.GetConstructors\\(\\) | ForEach-Object { \"  ctor\\(\" + \\(\\($_.GetParameters\\(\\) | ForEach-Object { $_.ParameterType.Name + ' ' + $_.Name }\\) -join ', '\\) + \"\\)\" } })",
+      "PowerShell($asm = [System.Reflection.Assembly]::LoadFrom\\(\"D:\\\\BiShop\\\\AiAgentGitHub\\\\ABI\\\\AbiAssist\\\\packages\\\\LineBotSDK.2.18.40\\\\lib\\\\net45\\\\LineBot.dll\"\\); try { $t = $asm.GetTypes\\(\\) } catch [System.Reflection.ReflectionTypeLoadException] { $t = $_.Exception.Types | Where-Object { $_ } }; $bot = $t | Where-Object { $_.FullName -eq 'isRock.LineBot.Bot' }; $bot.GetMethods\\(\\) | Where-Object { $_.Name -match 'ReplyMessage' } | ForEach-Object { \"  \" + $_.Name + \"\\(\" + \\(\\($_.GetParameters\\(\\) | ForEach-Object { $_.ParameterType.Name + ' ' + $_.Name }\\) -join ', '\\) + \"\\)\" })"
+    ]
+  }
+}
